@@ -22,11 +22,15 @@ module.exports = {
     fontSize: {
       8: "8px",
       9: "9px",
+      //10
       10: "10px",
+      //12
       12: "12px",
       13: "13px",
+      //14
       14: "14px",
       15: "15px",
+      //16
       16: "16px",
       17: "17px",
       18: "18px",
@@ -39,9 +43,11 @@ module.exports = {
       35: "35px",
       42: "42px",
       45: "45px",
+      60: "60px",
       "3vw": "3vw",
       "4vw": "4vw",
       "5vw": "5vw",
+      "6vw": "6vw",
       "8vw": "8vw",
       "10vw": "10vw",
     },
@@ -67,27 +73,39 @@ module.exports = {
       1: "1px",
       2: "2px",
       3: "3px",
+      //4
       4: "4px",
       5: "5px",
       6: "6px",
       7: "7px",
+      //8
       8: "8px",
+      //9
       9: "9px",
+      //10
       10: "10px",
+      //12
       12: "12px",
+      //14
       14: "14px",
+      //15
       15: "15px",
+      //16
       16: "16px",
       17: "17px",
       18: "18px",
+      //20
       20: "20px",
       22: "22px",
       23: "23px",
+      //24
       24: "24px",
+      //25
       25: "25px",
       26: "26px",
       28: "28px",
       30: "30px",
+      //32
       32: "32px",
       33: "33px",
       34: "34px",
@@ -117,20 +135,18 @@ module.exports = {
       77: "77px",
       78: "78px",
       80: "80px",
-      //84
       84: "84px",
       85: "85px",
       90: "90px",
       92: "92px",
       93: "93px",
-      //95
       95: "95px",
       96: "96px",
       100: "100px",
       104: "104px",
       106: "106px",
-      //107
       107: "107px",
+      //110
       110: "110px",
       112: "112px",
       115: "115px",
@@ -166,6 +182,8 @@ module.exports = {
       250: "250px",
       256: "256px",
       292: "292px",
+      //295
+      295: "295px",
       300: "300px",
       302: "302px",
       320: "320px",
@@ -183,6 +201,9 @@ module.exports = {
       688: "688px",
       700: "700px",
       839: "839px",
+      //850
+      850: "850px",
+
       865: "865px",
       1000: "1000px",
       "9/16": "56.25%",
@@ -225,6 +246,8 @@ module.exports = {
       "40vw": "40vw",
       "50vw": "50vw",
       "60vw": "60vw",
+      //70vw
+      "70vw": "70vw",
       "80vw": "80vw",
       "90vw": "90vw",
       "95vw": "95vw",
@@ -241,10 +264,18 @@ module.exports = {
       "100vh": "100vh",
     },
     colors: {
+      primary: "#22160F",
+      secondary: "#737373",
+      white: "#FAFAFA",
       whiteish: "#F0F0F0",
       "light-grey": "#DBDBDB",
-      white: "#ffffff",
+      "input-grey": "#D0D0D0",
+      "true-white": "#ffffff",
       red: "#FF0000",
+      brown: "#836048",
+      transparent: "transparent",
+      "alert-red": "#e85655",
+      "alert-green": "#4fc978",
     },
     boxShadow: {
       bottom: "0 4px 4px -3px #BFBFBF",
@@ -263,7 +294,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        Poppins: ["Poppins", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
       },
       spacing: {
         auto: "auto",
@@ -487,35 +518,36 @@ module.exports = {
   },
   plugins: [
     // require("tailwindcss-children"),
+    require("@tailwindcss/forms"),
     plugin(function ({ addComponents }) {
       const containers = {
         ".container": {
-          width: "90%",
-          maxWidth: "3000px",
-          marginLeft: "auto",
-          marginRight: "auto",
-        },
-        ".container-2": {
-          width: "104%",
+          width: "85%",
           maxWidth: "1400px",
           marginLeft: "auto",
           marginRight: "auto",
         },
-        ".container--books-in-drawer": {
-          maxWidth: "1200px",
-        },
-        ".container--md": {
-          maxWidth: "720px",
-        },
-        ".container--sm": {
-          maxWidth: "590px",
-        },
-        ".container--xs": {
-          maxWidth: "400px",
-        },
-        ".container--2xs": {
-          maxWidth: "330px",
-        },
+        // ".container-2": {
+        //   width: "104%",
+        //   maxWidth: "1400px",
+        //   marginLeft: "auto",
+        //   marginRight: "auto",
+        // },
+        // ".container--books-in-drawer": {
+        //   maxWidth: "1200px",
+        // },
+        // ".container--md": {
+        //   maxWidth: "720px",
+        // },
+        // ".container--sm": {
+        //   maxWidth: "590px",
+        // },
+        // ".container--xs": {
+        //   maxWidth: "400px",
+        // },
+        // ".container--2xs": {
+        //   maxWidth: "330px",
+        // },
       };
       addComponents(containers);
     }),
