@@ -29,6 +29,7 @@ const AlphaServiceApp = () => {
   const [alertPurpose, setAlertPurpose] = useState("");
 
   console.log(userCredentials);
+  console.log(user);
 
   const showAlert = (text, purpose) => {
     setIsAlert(true);
@@ -39,20 +40,23 @@ const AlphaServiceApp = () => {
     }, 1000);
   };
 
-  //authentication
-  onAuthStateChanged(auth, (user) => {
-    setUser(user);
-  });
+  // // authentication
+  // onAuthStateChanged(auth, (user) => {
+  //   setUser(user);
+  // });
 
   //sign up
   const register = async () => {
     try {
-      const user = await createUserWithEmailAndPassword(
+      const newUser = await createUserWithEmailAndPassword(
         auth,
         userCredentials.email,
         userCredentials.password
       );
+      newUser && setUser(newUser.user);
+      showAlert(`User ${user.email} successfully registered`, "success");
     } catch (error) {
+      showAlert("not registered", "danger");
       console.log(error.message);
     }
   };
@@ -78,13 +82,19 @@ const AlphaServiceApp = () => {
   useEffect(() => {
     if (!userCredentials) return;
     userAction === "register" ? register() : login();
+    console.log(userAction);
   }, [userCredentials]);
 
   return (
     <section className="container font-poppins">
       <AlertContext.Provider value={{ showAlert }}>
         <UserContext.Provider
-          value={{ setUserCredentials, userAction, setUserAction }}
+          value={{
+            userCredentials,
+            setUserCredentials,
+            userAction,
+            setUserAction,
+          }}
         >
           <Router>
             <Routes />

@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { UserContext } from "../../contexts/UserContext";
 import { AlertContext } from "../../contexts/AlertContext";
@@ -7,8 +8,10 @@ const LoginPageForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { showAlert } = useContext(AlertContext);
-  const { setUserCredentials, userAction, setUserAction } =
+  const { userCredentials, setUserCredentials, userAction, setUserAction } =
     useContext(UserContext);
+
+  const navigate = useNavigate();
 
   const handleEmailTyping = (e) => {
     setEmail(e.target.value);
@@ -21,10 +24,15 @@ const LoginPageForm = () => {
   const handleLoginPageForm = (e) => {
     e.preventDefault();
     if (!email || !password) {
+      console.log("missing");
       showAlert("Please provide email and password", "danger");
       return;
     }
-    setUserCredentials({ email, password });
+    if (email && password) {
+      setUserCredentials({ email, password });
+      console.log(userCredentials);
+      navigate("/my-orders");
+    }
   };
 
   return (
@@ -77,12 +85,24 @@ const LoginPageForm = () => {
       </button>
       {userAction === "register" ? (
         <h4 className="text-10 text-secondary text-center">
-          Already have an account? <span className="text-primary">Login</span>
+          Already have an account?{" "}
+          <span
+            className="text-primary cursor-pointer"
+            onClick={() => setUserAction("login")}
+          >
+            Login
+          </span>
         </h4>
       ) : (
         <h4 className="text-10 text-secondary text-center">
           Don't have an account?
-          <span className="text-primary"> Sign Up</span>
+          <span
+            className="text-primary cursor-pointer"
+            onClick={() => setUserAction("register")}
+          >
+            {" "}
+            Sign Up
+          </span>
         </h4>
       )}
     </form>
