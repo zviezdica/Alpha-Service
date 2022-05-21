@@ -1,7 +1,4 @@
 const Alert = ({ text, purpose }) => {
-  console.log("ne radim");
-  console.log(text);
-  console.log(purpose);
   return (
     <div className="w-max fixed top-30 left-1/2 -translate-x-1/2 text-secondary text-14 z-1">
       {purpose == "success" && (

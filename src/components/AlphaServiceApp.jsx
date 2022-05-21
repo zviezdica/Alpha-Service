@@ -86,7 +86,7 @@ const AlphaServiceApp = () => {
   }, [userCredentials]);
 
   return (
-    <section className="container font-poppins">
+    <section className="font-poppins">
       <AlertContext.Provider value={{ showAlert }}>
         <UserContext.Provider
           value={{

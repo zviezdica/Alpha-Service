@@ -4,7 +4,7 @@ import { motorcycle1 } from "../images";
 
 const LoginPage = () => {
   return (
-    <section className="pt-110">
+    <section className="container container-home pt-110">
       <Logo />
       <h2 className="mt-50 text-16 font-semibold text-secondary">Welcome to</h2>
       <h1 className="text-24 font-semibold text-primary pt-4">alpha service</h1>

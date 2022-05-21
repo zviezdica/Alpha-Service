@@ -71,10 +71,12 @@ module.exports = {
     spacing: {
       0: "0px",
       1: "1px",
+      //2
       2: "2px",
       3: "3px",
       //4
       4: "4px",
+      //5
       5: "5px",
       6: "6px",
       7: "7px",
@@ -103,7 +105,9 @@ module.exports = {
       //25
       25: "25px",
       26: "26px",
+
       28: "28px",
+      //20
       30: "30px",
       //32
       32: "32px",
@@ -140,8 +144,10 @@ module.exports = {
       90: "90px",
       92: "92px",
       93: "93px",
+      //95
       95: "95px",
       96: "96px",
+      //100
       100: "100px",
       104: "104px",
       106: "106px",
@@ -162,6 +168,7 @@ module.exports = {
       160: "160px",
       162: "162px",
       165: "165px",
+      //170
       170: "170px",
       172: "172px",
       176: "176px",
@@ -188,6 +195,7 @@ module.exports = {
       302: "302px",
       320: "320px",
       330: "330px",
+      //350
       350: "350px",
       400: "400px",
       450: "450px",
@@ -218,6 +226,7 @@ module.exports = {
       // '2/7': '28.55%',
       "1/7": "14%",
       "2/7": "29%",
+      //3/10
       "3/10": "30%",
       "6/7": "85%",
       "1/3": "33%",
@@ -226,7 +235,9 @@ module.exports = {
       "13/25": "52%",
       "1/2": "50%",
       "55/100": "55%",
+
       "3/5": "60%",
+      //7/10
       "7/10": "70%",
       "4/5": "80%",
       "9/10": "90%",
@@ -265,6 +276,7 @@ module.exports = {
     },
     colors: {
       primary: "#22160F",
+      "primary-50": "rgba(34, 22, 15, 0.3)",
       secondary: "#737373",
       white: "#FAFAFA",
       whiteish: "#F0F0F0",
@@ -274,7 +286,7 @@ module.exports = {
       red: "#FF0000",
       brown: "#836048",
       transparent: "transparent",
-      "alert-red": "#e85655",
+      "alert-red": "#B03636",
       "alert-green": "#4fc978",
     },
     boxShadow: {
@@ -522,10 +534,13 @@ module.exports = {
     plugin(function ({ addComponents }) {
       const containers = {
         ".container": {
-          width: "85%",
+          width: "90%",
           maxWidth: "1400px",
           marginLeft: "auto",
           marginRight: "auto",
+        },
+        ".container-home": {
+          width: "85%",
         },
         // ".container-2": {
         //   width: "104%",
