@@ -9,7 +9,7 @@ const Service = ({ selectedMotorcycle, objectKey, addService }) => {
   };
 
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center text-secondary">
       <div className="flex items-center" onClick={handleClick}>
         <div className="mr-12 h-11 w-11 border-1 border-solid border-input-grey rounded-full flex justify-center items-center">
           <div

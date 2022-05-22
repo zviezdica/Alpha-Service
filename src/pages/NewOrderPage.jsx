@@ -8,8 +8,6 @@ import servicesData from "../services-data.json";
 import { serviceBrands } from "../service-brands";
 let brands = serviceBrands();
 
-let temporaryPrice = 0;
-
 //hour termins 8-15, without 16 - to close service on time
 let startWorkingHour = 8;
 let endWorkingHour = 16;
@@ -73,18 +71,6 @@ const NewOrder = () => {
     setHour(hour);
   };
 
-  const handleFinalPrice = () => {
-    if (isChainChange && isOilChange && isAirChange && isBrakeChange) {
-      setFinalPrice(tempPrice - 40);
-    } else if (isChainChange && isOilChange && isAirChange) {
-      setFinalPrice(tempPrice * 0.8);
-    } else if (isOilChange && isAirChange) {
-      setFinalPrice(tempPrice - 20);
-    } else if (isChainChange && isBrakeChange) {
-      setFinalPrice(tempPrice * 0.85);
-    } else setFinalPrice(tempPrice);
-  };
-
   const handleAddService = (objectKey, isClicked) => {
     if (isClicked) {
       objectKey == "Chain change price"
@@ -96,7 +82,6 @@ const NewOrder = () => {
         : setIsBrakeChange(true);
       setTempPrice(tempPrice + selectedMotorcycle["Service"][objectKey]);
       setSelectedServices([...selectedServices, { objectKey }]);
-      handleFinalPrice();
     } else {
       objectKey == "Chain change price"
         ? setIsChainChange(false)
@@ -110,9 +95,28 @@ const NewOrder = () => {
         (selectedService) => selectedService.objectKey != objectKey
       );
       setSelectedServices(filteredServices);
-      handleFinalPrice();
     }
   };
+
+  const handleFinalPrice = () => {
+    if (isChainChange && isOilChange && isAirChange && isBrakeChange) {
+      //40 eur off
+      setFinalPrice(tempPrice - 40);
+    } else if (isChainChange && isOilChange && isAirChange) {
+      //20% off
+      setFinalPrice(tempPrice * 0.8);
+    } else if (isOilChange && isAirChange) {
+      //20 eur off
+      setFinalPrice(tempPrice - 20);
+    } else if (isChainChange && isBrakeChange) {
+      //15% off
+      setFinalPrice(tempPrice * 0.85);
+    } else setFinalPrice(tempPrice);
+  };
+
+  useEffect(() => {
+    handleFinalPrice();
+  }, [tempPrice]);
 
   useEffect(() => {
     // if (!(brand || model)) return;
@@ -264,11 +268,9 @@ const NewOrder = () => {
                         key={`h${hourTermin}`}
                         className={
                           "text-14 cursor-pointer " +
-                          (hourTermin === hour
-                            ? "text-white"
-                            : "text - primary")
+                          (hourTermin == hour ? "text-white" : "text - primary")
                         }
-                        onClick={(hourTermin) => handleHour(hourTermin)}
+                        onClick={() => handleHour(hourTermin)}
                       >
                         {hourTermin}
                       </p>
@@ -282,7 +284,7 @@ const NewOrder = () => {
               type of service
             </p>
             {isServiceTabActive && (
-              <div className="w-full border-red border-solid border-2">
+              <div className="w-full">
                 {Object.keys(selectedMotorcycle["Service"]).map((key) => {
                   return (
                     <Service
