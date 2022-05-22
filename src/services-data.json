@@ -3,333 +3,408 @@
     "Brand": "Aprilia",
     "Model": "RS 50",
     "Last supported year": 1994,
-    "Chain change price": 85,
-    "Oil and oil filter change price": 23,
-    "Air filter change price": 18,
-    "Brake fluid change price": 44
+    "Service":{
+      "Chain change price": 85,
+      "Oil and oil filter change price": 23,
+      "Air filter change price": 18,
+      "Brake fluid change price": 44
+    }
+    
   },
   {
     "Brand": "Aprilia",
     "Model": "Tuono",
     "Last supported year": 1995,
-    "Chain change price": 77,
-    "Oil and oil filter change price": 20,
-    "Air filter change price": 24,
-    "Brake fluid change price": 42
+    "Service":{
+      "Chain change price": 77,
+      "Oil and oil filter change price": 20,
+      "Air filter change price": 24,
+      "Brake fluid change price": 42
+    }
   },
   {
     "Brand": "Aprilia",
     "Model": "RSV4 1100",
     "Last supported year": 1991,
-    "Chain change price": 80,
-    "Oil and oil filter change price": 42,
-    "Air filter change price": 17,
-    "Brake fluid change price": 23
+    "Service":{
+      "Chain change price": 80,
+      "Oil and oil filter change price": 42,
+      "Air filter change price": 17,
+      "Brake fluid change price": 23
+    }
   },
   {
     "Brand": "Aprilia",
     "Model": "RSV4 125",
     "Last supported year": 1996,
-    "Chain change price": 58,
-    "Oil and oil filter change price": 32,
-    "Air filter change price": 22,
-    "Brake fluid change price": 38
+    "Service":{
+      "Chain change price": 58,
+      "Oil and oil filter change price": 32,
+      "Air filter change price": 22,
+      "Brake fluid change price": 38
+    }
   },
   {
     "Brand": "Aprilia",
     "Model": "RS 125",
     "Last supported year": 1992,
-    "Chain change price": 56,
-    "Oil and oil filter change price": 22,
-    "Air filter change price": 30,
-    "Brake fluid change price": 32
+    "Service":{
+      "Chain change price": 56,
+      "Oil and oil filter change price": 22,
+      "Air filter change price": 30,
+      "Brake fluid change price": 32
+    }
   },
   {
     "Brand": "Aprilia",
     "Model": "SR 50",
     "Last supported year": 1995,
-    "Chain change price": 83,
-    "Oil and oil filter change price": 28,
-    "Air filter change price": 20,
-    "Brake fluid change price": 39
+    "Service":{
+      "Chain change price": 83,
+      "Oil and oil filter change price": 28,
+      "Air filter change price": 20,
+      "Brake fluid change price": 39
+    }
   },
   {
     "Brand": "Aprilia",
     "Model": "SR 125",
     "Last supported year": 1994,
-    "Chain change price": 82,
-    "Oil and oil filter change price": 23,
-    "Air filter change price": 25,
-    "Brake fluid change price": 28
+    "Service":{
+      "Chain change price": 82,
+      "Oil and oil filter change price": 23,
+      "Air filter change price": 25,
+      "Brake fluid change price": 28
+    }
   },
   {
     "Brand": "Ducati",
     "Model": "Panigale V4",
     "Last supported year": 1996,
-    "Chain change price": 71,
-    "Oil and oil filter change price": 30,
-    "Air filter change price": 26,
-    "Brake fluid change price": 45
+    "Service":{
+      "Chain change price": 71,
+      "Oil and oil filter change price": 30,
+      "Air filter change price": 26,
+      "Brake fluid change price": 45
+    }
   },
   {
     "Brand": "Ducati",
     "Model": "Scrambler 800",
     "Last supported year": 1991,
-    "Chain change price": 93,
-    "Oil and oil filter change price": 44,
-    "Air filter change price": 23,
-    "Brake fluid change price": 41
+    "Service":{
+      "Chain change price": 93,
+      "Oil and oil filter change price": 44,
+      "Air filter change price": 23,
+      "Brake fluid change price": 41
+    }
   },
   {
     "Brand": "Ducati",
     "Model": "Diavel",
     "Last supported year": 1991,
-    "Chain change price": 70,
-    "Oil and oil filter change price": 22,
-    "Air filter change price": 29,
-    "Brake fluid change price": 35
+    "Service":{
+      "Chain change price": 70,
+      "Oil and oil filter change price": 22,
+      "Air filter change price": 29,
+      "Brake fluid change price": 35
+    }
   },
   {
     "Brand": "Ducati",
     "Model": "Monster",
     "Last supported year": 1991,
-    "Chain change price": 86,
-    "Oil and oil filter change price": 26,
-    "Air filter change price": 17,
-    "Brake fluid change price": 25
+    "Service":{
+      "Chain change price": 86,
+      "Oil and oil filter change price": 26,
+      "Air filter change price": 17,
+      "Brake fluid change price": 25
+    }
   },
   {
     "Brand": "Ducati",
     "Model": "Panigale V2",
     "Last supported year": 1991,
-    "Chain change price": 91,
-    "Oil and oil filter change price": 32,
-    "Air filter change price": 15,
-    "Brake fluid change price": 23
+    "Service":{
+      "Chain change price": 91,
+      "Oil and oil filter change price": 32,
+      "Air filter change price": 15,
+      "Brake fluid change price": 23
+    }
   },
   {
     "Brand": "Ducati",
     "Model": "Hypermotard",
     "Last supported year": 1991,
-    "Chain change price": 68,
-    "Oil and oil filter change price": 39,
-    "Air filter change price": 20,
-    "Brake fluid change price": 39
+    "Service":{
+      "Chain change price": 68,
+      "Oil and oil filter change price": 39,
+      "Air filter change price": 20,
+      "Brake fluid change price": 39
+    }
   },
   {
     "Brand": "Ducati",
     "Model": "Streetfighter",
     "Last supported year": 1996,
-    "Chain change price": 91,
-    "Oil and oil filter change price": 23,
-    "Air filter change price": 28,
-    "Brake fluid change price": 38
+    "Service":{
+      "Chain change price": 91,
+      "Oil and oil filter change price": 23,
+      "Air filter change price": 28,
+      "Brake fluid change price": 38
+    }
   },
   {
     "Brand": "Yamaha",
     "Model": "MT-03",
     "Last supported year": 1995,
-    "Chain change price": 75,
-    "Oil and oil filter change price": 36,
-    "Air filter change price": 29,
-    "Brake fluid change price": 34
+    "Service":{
+      "Chain change price": 75,
+      "Oil and oil filter change price": 36,
+      "Air filter change price": 29,
+      "Brake fluid change price": 34
+    }
   },
   {
     "Brand": "Yamaha",
     "Model": "MT-07",
     "Last supported year": 1991,
-    "Chain change price": 50,
-    "Oil and oil filter change price": 43,
-    "Air filter change price": 27,
-    "Brake fluid change price": 43
+    "Service":{
+      "Chain change price": 50,
+      "Oil and oil filter change price": 43,
+      "Air filter change price": 27,
+      "Brake fluid change price": 43
+    }
   },
   {
     "Brand": "Yamaha",
     "Model": "MT-09",
     "Last supported year": 1994,
-    "Chain change price": 92,
-    "Oil and oil filter change price": 26,
-    "Air filter change price": 20,
-    "Brake fluid change price": 40
+    "Service":{
+      "Chain change price": 92,
+      "Oil and oil filter change price": 26,
+      "Air filter change price": 20,
+      "Brake fluid change price": 40
+    }
   },
   {
     "Brand": "Yamaha",
     "Model": "R1",
     "Last supported year": 1993,
-    "Chain change price": 48,
-    "Oil and oil filter change price": 38,
-    "Air filter change price": 25,
-    "Brake fluid change price": 40
+    "Service":{
+      "Chain change price": 48,
+      "Oil and oil filter change price": 38,
+      "Air filter change price": 25,
+      "Brake fluid change price": 40
+    }
   },
   {
     "Brand": "Yamaha",
     "Model": "R6",
     "Last supported year": 1995,
-    "Chain change price": 74,
-    "Oil and oil filter change price": 29,
-    "Air filter change price": 27,
-    "Brake fluid change price": 38
+    "Service":{
+      "Chain change price": 74,
+      "Oil and oil filter change price": 29,
+      "Air filter change price": 27,
+      "Brake fluid change price": 38
+    }
   },
   {
     "Brand": "Yamaha",
     "Model": "R7",
     "Last supported year": 1991,
-    "Chain change price": 87,
-    "Oil and oil filter change price": 45,
-    "Air filter change price": 28,
-    "Brake fluid change price": 22
+    "Service":{
+      "Chain change price": 87,
+      "Oil and oil filter change price": 45,
+      "Air filter change price": 28,
+      "Brake fluid change price": 22
+    }
   },
   {
     "Brand": "Yamaha",
     "Model": "R125",
     "Last supported year": 1991,
-    "Chain change price": 52,
-    "Oil and oil filter change price": 44,
-    "Air filter change price": 24,
-    "Brake fluid change price": 28
+    "Service":{
+      "Chain change price": 52,
+      "Oil and oil filter change price": 44,
+      "Air filter change price": 24,
+      "Brake fluid change price": 28
+    }
   },
   {
     "Brand": "Kawasaki",
     "Model": "Ninja H2",
     "Last supported year": 1995,
-    "Chain change price": 48,
-    "Oil and oil filter change price": 37,
-    "Air filter change price": 28,
-    "Brake fluid change price": 26
+    "Service":{
+      "Chain change price": 48,
+      "Oil and oil filter change price": 37,
+      "Air filter change price": 28,
+      "Brake fluid change price": 26
+    }
   },
   {
     "Brand": "Kawasaki",
     "Model": "Ninja 300",
     "Last supported year": 1992,
-    "Chain change price": 44,
-    "Oil and oil filter change price": 38,
-    "Air filter change price": 23,
-    "Brake fluid change price": 26
+    "Service":{
+      "Chain change price": 44,
+      "Oil and oil filter change price": 38,
+      "Air filter change price": 23,
+      "Brake fluid change price": 26
+    }
   },
   {
     "Brand": "Kawasaki",
     "Model": "Ninja 650",
     "Last supported year": 1991,
-    "Chain change price": 69,
-    "Oil and oil filter change price": 33,
-    "Air filter change price": 27,
-    "Brake fluid change price": 29
+    "Service":{
+      "Chain change price": 69,
+      "Oil and oil filter change price": 33,
+      "Air filter change price": 27,
+      "Brake fluid change price": 29
+    }
   },
   {
     "Brand": "Kawasaki",
     "Model": "Ninja ZX-10R",
     "Last supported year": 1993,
-    "Chain change price": 50,
-    "Oil and oil filter change price": 34,
-    "Air filter change price": 24,
-    "Brake fluid change price": 38
+    "Service":{
+      "Chain change price": 50,
+      "Oil and oil filter change price": 34,
+      "Air filter change price": 24,
+      "Brake fluid change price": 38
+    }
   },
   {
     "Brand": "Kawasaki",
     "Model": "Z750",
     "Last supported year": 1993,
-    "Chain change price": 82,
-    "Oil and oil filter change price": 30,
-    "Air filter change price": 19,
-    "Brake fluid change price": 27
+    "Service":{
+      "Chain change price": 82,
+      "Oil and oil filter change price": 30,
+      "Air filter change price": 19,
+      "Brake fluid change price": 27
+    }
   },
   {
     "Brand": "Kawasaki",
     "Model": "Z900",
     "Last supported year": 1995,
-    "Chain change price": 89,
-    "Oil and oil filter change price": 37,
-    "Air filter change price": 26,
-    "Brake fluid change price": 43
+    "Service":{
+      "Chain change price": 89,
+      "Oil and oil filter change price": 37,
+      "Air filter change price": 26,
+      "Brake fluid change price": 43
+    }
   },
   {
     "Brand": "Suzuki",
     "Model": "Hayabusa",
     "Last supported year": 1994,
-    "Chain change price": 44,
-    "Oil and oil filter change price": 36,
-    "Air filter change price": 24,
-    "Brake fluid change price": 28
+    "Service":{
+      "Chain change price": 44,
+      "Oil and oil filter change price": 36,
+      "Air filter change price": 24,
+      "Brake fluid change price": 28
+    }
   },
   {
     "Brand": "Suzuki",
     "Model": "Burgman 400",
     "Last supported year": 1992,
-    "Chain change price": 58,
-    "Oil and oil filter change price": 41,
-    "Air filter change price": 15,
-    "Brake fluid change price": 30
+    "Service":{
+      "Chain change price": 58,
+      "Oil and oil filter change price": 41,
+      "Air filter change price": 15,
+      "Brake fluid change price": 30
+    }
   },
   {
     "Brand": "Suzuki",
     "Model": "GSX 600R",
     "Last supported year": 1992,
-    "Chain change price": 95,
-    "Oil and oil filter change price": 42,
-    "Air filter change price": 30,
-    "Brake fluid change price": 43
+    "Service":{
+      "Chain change price": 95,
+      "Oil and oil filter change price": 42,
+      "Air filter change price": 30,
+      "Brake fluid change price": 43
+    }
   },
   {
     "Brand": "Suzuki",
     "Model": "GSX 1000R",
     "Last supported year": 1994,
-    "Chain change price": 80,
-    "Oil and oil filter change price": 43,
-    "Air filter change price": 24,
-    "Brake fluid change price": 24
+    "Service":{
+      "Chain change price": 80,
+      "Oil and oil filter change price": 43,
+      "Air filter change price": 24,
+      "Brake fluid change price": 24
+    }
   },
   {
     "Brand": "Suzuki",
     "Model": "GSX 750R",
     "Last supported year": 1996,
-    "Chain change price": 79,
-    "Oil and oil filter change price": 36,
-    "Air filter change price": 22,
-    "Brake fluid change price": 25
+    "Service":{
+      "Chain change price": 79,
+      "Oil and oil filter change price": 36,
+      "Air filter change price": 22,
+      "Brake fluid change price": 25
+    }
   },
   {
     "Brand": "Suzuki",
     "Model": "GSX 750S",
     "Last supported year": 1995,
-    "Chain change price": 49,
-    "Oil and oil filter change price": 45,
-    "Air filter change price": 15,
-    "Brake fluid change price": 22
+    "Service":{
+      "Chain change price": 49,
+      "Oil and oil filter change price": 45,
+      "Air filter change price": 15,
+      "Brake fluid change price": 22
+    }
   },
   {
     "Brand": "Suzuki",
     "Model": "GSX 1000S",
     "Last supported year": 1995,
-    "Chain change price": 100,
-    "Oil and oil filter change price": 41,
-    "Air filter change price": 17,
-    "Brake fluid change price": 30
+    "Service":{
+      "Chain change price": 100,
+      "Oil and oil filter change price": 41,
+      "Air filter change price": 17,
+      "Brake fluid change price": 30
+    }
   },
   {
     "Brand": "Suzuki",
     "Model": "GSR 600",
     "Last supported year": 1995,
-    "Chain change price": 99,
-    "Oil and oil filter change price": 42,
-    "Air filter change price": 17,
-    "Brake fluid change price": 43
+    "Service":{
+      "Chain change price": 99,
+      "Oil and oil filter change price": 42,
+      "Air filter change price": 17,
+      "Brake fluid change price": 43
+    }
   },
   {
     "Brand": "Suzuki",
     "Model": "GSR 750",
     "Last supported year": 1993,
-    "Chain change price": 57,
-    "Oil and oil filter change price": 30,
-    "Air filter change price": 19,
-    "Brake fluid change price": 36
+    "Service":{
+      "Chain change price": 57,
+      "Oil and oil filter change price": 30,
+      "Air filter change price": 19,
+      "Brake fluid change price": 36
+    }
   },
   {
     "Brand": "Suzuki",
     "Model": "GSR 1000",
     "Last supported year": 1993,
-    "Chain change price": 72,
-    "Oil and oil filter change price": 41,
-    "Air filter change price": 29,
-    "Brake fluid change price": 31
+    "Service":{
+      "Chain change price": 72,
+      "Oil and oil filter change price": 41,
+      "Air filter change price": 29,
+      "Brake fluid change price": 31
+    }
   }
 ]

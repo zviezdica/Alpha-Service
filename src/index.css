@@ -4,6 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 /* SCROLLBAR */
 /* width */
 ::-webkit-scrollbar {
@@ -23,4 +24,45 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     @apply bg-primary
+}
+
+/* REMOVE ARROWS FROM INPUT NUMBER */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* CUSTOMIZED CALENDAR */
+/* using important to override default styles */
+.sdp{
+    
+    @apply bg-transparent w-295 text-14 !important;
+    --theme-color: #22160F !important;
+    --font: "Poppins" !important;
+    --shadow: "none" !important;
+}
+.sdp--square-btn {
+    @apply bg-transparent h-16 w-16 !important
+}
+.sdp--theme-color {
+    @apply bg-primary !important
+}
+.sdp--dates-grid {
+    gap: 2px !important;
+    grid-template-columns: repeat(7, 1fr);
+    justify-items: center;
+    margin: 2px 0 0 !important;
+}
+.sdp--month-name {
+    padding: 0px !important;
+}
+.sdp--dates-grid>p.sdp--text {
+    padding: 0px !important;
 }
