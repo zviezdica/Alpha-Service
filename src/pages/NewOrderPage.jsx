@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import DatePicker from "sassy-datepicker";
 
-import { Logo } from "../components";
+import { Logo, Service } from "../components";
 
 import { arrow, clock } from "../images";
 import servicesData from "../services-data.json";
 import { serviceBrands } from "../service-brands";
 let brands = serviceBrands();
+
+let temporaryPrice = 0;
 
 //hour termins 8-15, without 16 - to close service on time
 let startWorkingHour = 8;
@@ -15,7 +17,6 @@ let hourTermins = [];
 for (let i = startWorkingHour; i < endWorkingHour; i++) {
   hourTermins.push(i);
 }
-console.log(hourTermins);
 
 const NewOrder = () => {
   const [brand, setBrand] = useState("");
@@ -30,6 +31,16 @@ const NewOrder = () => {
   const [hour, setHour] = useState("");
   const [selectedMotorcycle, setSelectedMotorcycle] = useState("");
   const [isServiceTabActive, setIsServiceTabActive] = useState(false);
+  const [tempPrice, setTempPrice] = useState(0);
+  const [finalPrice, setFinalPrice] = useState(0);
+  const [displayedData, setDisplayedData] = useState([]);
+  const [selectedServices, setSelectedServices] = useState([]);
+  const [isChainChange, setIsChainChange] = useState(false);
+  const [isOilChange, setIsOilChange] = useState(false);
+  const [isAirChange, setIsAirChange] = useState(false);
+  const [isBrakeChange, setIsBrakeChange] = useState(false);
+
+  const addedServiceRef = useRef(null);
 
   const handleSelectedBrand = (brand) => {
     setBrand(brand);
@@ -62,6 +73,47 @@ const NewOrder = () => {
     setHour(hour);
   };
 
+  const handleFinalPrice = () => {
+    if (isChainChange && isOilChange && isAirChange && isBrakeChange) {
+      setFinalPrice(tempPrice - 40);
+    } else if (isChainChange && isOilChange && isAirChange) {
+      setFinalPrice(tempPrice * 0.8);
+    } else if (isOilChange && isAirChange) {
+      setFinalPrice(tempPrice - 20);
+    } else if (isChainChange && isBrakeChange) {
+      setFinalPrice(tempPrice * 0.85);
+    } else setFinalPrice(tempPrice);
+  };
+
+  const handleAddService = (objectKey, isClicked) => {
+    if (isClicked) {
+      objectKey == "Chain change price"
+        ? setIsChainChange(true)
+        : objectKey == "Oil and oil filter change price"
+        ? setIsOilChange(true)
+        : objectKey == "Air filter change price"
+        ? setIsAirChange(true)
+        : setIsBrakeChange(true);
+      setTempPrice(tempPrice + selectedMotorcycle["Service"][objectKey]);
+      setSelectedServices([...selectedServices, { objectKey }]);
+      handleFinalPrice();
+    } else {
+      objectKey == "Chain change price"
+        ? setIsChainChange(false)
+        : objectKey == "Oil and oil filter change price"
+        ? setIsOilChange(false)
+        : objectKey == "Air filter change price"
+        ? setIsAirChange(false)
+        : setIsBrakeChange(false);
+      setTempPrice(tempPrice - selectedMotorcycle["Service"][objectKey]);
+      let filteredServices = selectedServices.filter(
+        (selectedService) => selectedService.objectKey != objectKey
+      );
+      setSelectedServices(filteredServices);
+      handleFinalPrice();
+    }
+  };
+
   useEffect(() => {
     // if (!(brand || model)) return;
     if (brand && model) {
@@ -69,7 +121,6 @@ const NewOrder = () => {
         (data) => data["Brand"] === brand && data["Model"] === model
       )[0];
       setSelectedMotorcycle(selectedBike);
-      console.log(selectedMotorcycle);
     }
     if (brand && model && modelYear) {
       setIsServiceTabActive(true);
@@ -233,17 +284,13 @@ const NewOrder = () => {
             {isServiceTabActive && (
               <div className="w-full border-red border-solid border-2">
                 {Object.keys(selectedMotorcycle["Service"]).map((key) => {
-                  console.log(key === "Chain change price");
                   return (
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center">
-                        <div className="mr-12 h-11 w-11 border-1 border-solid border-input-grey rounded-full flex justify-center items-center">
-                          <div className="h-7 w-7 bg-primary rounded-full "></div>
-                        </div>
-                        <p>{key}</p>
-                      </div>
-                      <p>{selectedMotorcycle["Service"][key]}</p>
-                    </div>
+                    <Service
+                      selectedMotorcycle={selectedMotorcycle}
+                      key={key}
+                      objectKey={key}
+                      addService={handleAddService}
+                    />
                   );
                 })}
               </div>
@@ -251,7 +298,8 @@ const NewOrder = () => {
           </div>
         </div>
       </div>
-      <div></div>
+      <div ref={addedServiceRef}>{tempPrice}</div>
+      <div>{finalPrice}</div>
     </section>
   );
 };
