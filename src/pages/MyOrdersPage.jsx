@@ -12,21 +12,12 @@ import { BrownButton, Logo, SubmittedOrder } from "../components";
 import { UserContext } from "../contexts/UserContext";
 import { auth, db } from "../firebase-config";
 
-import { alphaWhite, motorcycle2 } from "../images";
+import { alphaWhite, motorcycle2, motorcycle3 } from "../images";
 
-const MyOrdersPage = ({ isNewOrder }) => {
+const MyOrdersPage = ({ newOrderId }) => {
   const [orders, setOrders] = useState([]);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
-  const location = useLocation();
-  console.log(location.newOrder);
-  console.log(orders);
-
-  if (isNewOrder) {
-    console.log("nova narudžba");
-  } else {
-    console.log("nema nove narudžbe");
-  }
 
   const handleNewOrder = () => {
     navigate("/new-order");
@@ -103,19 +94,38 @@ const MyOrdersPage = ({ isNewOrder }) => {
           )}
         </div>
       </div>
+
       <div className="flex w-3/10 items-center justify-center relative">
-        <div className="w-max relative ">
-          <img
-            src={alphaWhite}
-            alt="Alpha text"
-            className="absolute top-25 left-30"
-          />
-          <img
-            src={motorcycle2}
-            alt="motorcycle photo"
-            className="rounded-lg bg-input-grey"
-          />
-        </div>
+        {!newOrderId && (
+          <div className="w-max relative ">
+            <img
+              src={alphaWhite}
+              alt="Alpha text"
+              className="absolute top-25 left-30"
+            />
+            <img
+              src={motorcycle2}
+              alt="motorcycle photo"
+              className="rounded-lg bg-input-grey"
+            />
+          </div>
+        )}
+        {newOrderId && (
+          <div
+            className="w-full h-80vh p-30 border-1 border-solid border-input-grey rounded-lg relative bg-contain bg-no-repeat bg-bottom  text-secondary"
+            style={{ backgroundImage: `url(${motorcycle3})` }}
+          >
+            <h2 className="text-24 font-semibold leading-8">
+              Thank you <br />
+              for your order: <br />
+              {/* <span className="text-16">#{newOrderId}!</span> */}
+            </h2>
+            <p className="text-16 font-semibold pb-20">#{newOrderId}!</p>
+            <p className="text-14">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

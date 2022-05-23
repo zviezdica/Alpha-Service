@@ -8,17 +8,17 @@ import {
   OrderConfirmationPage,
 } from "../pages";
 
-const Routes = ({ updateOrderState, isNewOrder }) => {
+const Routes = ({ newOrderUpdate, newOrderId }) => {
   let routes = useRoutes([
     { path: "/", element: <LoginPage /> },
     { path: "/login", element: <LoginPage /> },
     {
       path: "/my-orders",
-      element: <MyOrdersPage isNewOrder={isNewOrder} />,
+      element: <MyOrdersPage newOrderId={newOrderId} />,
     },
     {
       path: "/new-order",
-      element: <NewOrderPage updateOrderState={updateOrderState} />,
+      element: <NewOrderPage newOrderUpdate={newOrderUpdate} />,
     },
     { path: "/order-confirmation", element: <OrderConfirmationPage /> },
   ]);

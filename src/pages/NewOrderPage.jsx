@@ -19,7 +19,7 @@ import { serviceBrands } from "../service-brands";
 import { async } from "@firebase/util";
 let brands = serviceBrands();
 
-//hour termins 8-15, without 16 - to close service on time
+//hour termins 8-15, without 16 - to close service on time :)
 let startWorkingHour = 8;
 let endWorkingHour = 16;
 let hourTermins = [];
@@ -27,7 +27,7 @@ for (let i = startWorkingHour; i < endWorkingHour; i++) {
   hourTermins.push(i);
 }
 
-const NewOrder = ({ updateOrderState }) => {
+const NewOrder = ({ newOrderUpdate }) => {
   const [brand, setBrand] = useState("");
   const [isBrandDropdownActive, setIsBrandDropdownActive] = useState(false);
   const [model, setModel] = useState("");
@@ -75,8 +75,8 @@ const NewOrder = ({ updateOrderState }) => {
     const userRef = doc(db, "users", user.uid, "orders", orderId);
     try {
       await setDoc(userRef, order);
-      navigate("/my-orders", { state: { newOrder: true } });
-      updateOrderState(true);
+      navigate("/my-orders");
+      newOrderUpdate(order.orderId);
     } catch (error) {
       console.log(error.message);
     }

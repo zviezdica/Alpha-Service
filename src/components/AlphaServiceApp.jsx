@@ -27,10 +27,10 @@ const AlphaServiceApp = () => {
   const [isAlert, setIsAlert] = useState(false);
   const [alertText, setAlertText] = useState("");
   const [alertPurpose, setAlertPurpose] = useState("");
-  const [isNewOrder, setIsNewOrder] = useState(false);
+  const [newOrderId, setNewOrderId] = useState("");
 
-  const handleOrderState = (isTrue) => {
-    setIsNewOrder(isTrue);
+  const handleNewOrderUpdate = (orderId) => {
+    setNewOrderId(orderId);
   };
 
   const showAlert = (text, purpose) => {
@@ -106,8 +106,8 @@ const AlphaServiceApp = () => {
         >
           <Router>
             <Routes
-              updateOrderState={handleOrderState}
-              isNewOrder={isNewOrder}
+              newOrderUpdate={handleNewOrderUpdate}
+              newOrderId={newOrderId}
             />
           </Router>
         </UserContext.Provider>
