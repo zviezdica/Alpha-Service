@@ -1,16 +1,61 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  setDoc,
+} from "firebase/firestore";
 
-import { BrownButton, Logo } from "../components";
+import { BrownButton, Logo, SubmittedOrder } from "../components";
+import { UserContext } from "../contexts/UserContext";
+import { auth, db } from "../firebase-config";
 
 import { alphaWhite, motorcycle2 } from "../images";
 
-const MyOrdersPage = () => {
+const MyOrdersPage = ({ isNewOrder }) => {
+  const [orders, setOrders] = useState([]);
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location.newOrder);
+  console.log(orders);
+
+  if (isNewOrder) {
+    console.log("nova narudžba");
+  } else {
+    console.log("nema nove narudžbe");
+  }
 
   const handleNewOrder = () => {
     navigate("/new-order");
   };
+
+  const handleGetOrders = async () => {
+    let ordersArr = [];
+    try {
+      const userRef = collection(db, "users", user.uid, "orders");
+      const results = await getDocs(userRef);
+      if (results) {
+        results.forEach((result) => {
+          ordersArr.push(result.data());
+          console.log(result.data());
+        });
+        setOrders(ordersArr);
+      } else return;
+    } catch (error) {
+      console.log(error.message);
+    }
+    console.log(orders);
+  };
+
+  useEffect(() => {
+    if (user) {
+      handleGetOrders();
+      console.log(user.uid);
+    }
+  }, [user]);
 
   return (
     <section className="container pt-95 flex justify-between">
@@ -28,15 +73,34 @@ const MyOrdersPage = () => {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
         <div className="w-full h-350 relative">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-            <p className="text-14 text-secondary pb-10">You have no orders</p>
-            <p
-              className="text-12 font-bold text-brown capitalize cursor-pointer hover:text-primary transition-color"
-              onClick={handleNewOrder}
-            >
-              create new order
-            </p>
-          </div>
+          {orders.length === 0 && (
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
+              <p className="text-14 text-secondary pb-10">You have no orders</p>
+              <p
+                className="text-12 font-bold text-brown capitalize cursor-pointer hover:text-primary transition-color"
+                onClick={handleNewOrder}
+              >
+                create new order
+              </p>
+            </div>
+          )}
+          {orders && (
+            <div className="pt-30">
+              <div className="flex justify-between items-center w-9/10 mr-15 px-24 py-6 text-10 text-secondary capitalize">
+                <p>order ID</p>
+                <p>service date</p>
+                <p>brand</p>
+                <p>mileage</p>
+              </div>
+              <div className="h-50vh overflow-y-scroll">
+                {orders.map((order) => {
+                  return (
+                    <SubmittedOrder orderData={order} key={order.orderId} />
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <div className="flex w-3/10 items-center justify-center relative">

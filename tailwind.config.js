@@ -96,10 +96,12 @@ module.exports = {
       15: "15px",
       //16
       16: "16px",
+      //17
       17: "17px",
       18: "18px",
       //20
       20: "20px",
+      //22
       22: "22px",
       23: "23px",
       //24
@@ -120,6 +122,7 @@ module.exports = {
       37: "37px",
       38: "38px",
       39: "39px",
+      //40
       40: "40px",
       42: "42px",
       44: "44px",
@@ -167,6 +170,7 @@ module.exports = {
       138: "138px",
       140: "140px",
       148: "148px",
+      //150
       150: "150px",
       //160
       160: "160px",
@@ -290,6 +294,9 @@ module.exports = {
       whiteish: "#F0F0F0",
       "light-grey": "#DBDBDB",
       "input-grey": "#D0D0D0",
+      "discounts-grey": "#858585",
+      "prev-grey": "#C2C2C2",
+      "orders-grey": "rgba(208, 208, 208, 0.4)",
       "true-white": "#ffffff",
       red: "#FF0000",
       brown: "#836048",

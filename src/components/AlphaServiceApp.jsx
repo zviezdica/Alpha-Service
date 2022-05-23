@@ -27,9 +27,11 @@ const AlphaServiceApp = () => {
   const [isAlert, setIsAlert] = useState(false);
   const [alertText, setAlertText] = useState("");
   const [alertPurpose, setAlertPurpose] = useState("");
+  const [isNewOrder, setIsNewOrder] = useState(false);
 
-  console.log(userCredentials);
-  console.log(user);
+  const handleOrderState = (isTrue) => {
+    setIsNewOrder(isTrue);
+  };
 
   const showAlert = (text, purpose) => {
     setIsAlert(true);
@@ -40,20 +42,24 @@ const AlphaServiceApp = () => {
     }, 1000);
   };
 
-  // // authentication
-  // onAuthStateChanged(auth, (user) => {
-  //   setUser(user);
-  // });
+  // authentication
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      }
+    });
+  }, [userCredentials]);
 
   //sign up
   const register = async () => {
     try {
-      const newUser = await createUserWithEmailAndPassword(
+      const user = await createUserWithEmailAndPassword(
         auth,
         userCredentials.email,
         userCredentials.password
       );
-      newUser && setUser(newUser.user);
+      // newUser && setUser(newUser.user);
       showAlert(`User ${user.email} successfully registered`, "success");
     } catch (error) {
       showAlert("not registered", "danger");
@@ -69,6 +75,7 @@ const AlphaServiceApp = () => {
         userCredentials.email,
         userCredentials.password
       );
+      // existingUser && setUser(existingUser.user);
     } catch (error) {
       console.log(error.message);
     }
@@ -94,10 +101,14 @@ const AlphaServiceApp = () => {
             setUserCredentials,
             userAction,
             setUserAction,
+            user,
           }}
         >
           <Router>
-            <Routes />
+            <Routes
+              updateOrderState={handleOrderState}
+              isNewOrder={isNewOrder}
+            />
           </Router>
         </UserContext.Provider>
       </AlertContext.Provider>

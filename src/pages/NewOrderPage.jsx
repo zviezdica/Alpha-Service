@@ -1,11 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import DatePicker from "sassy-datepicker";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  setDoc,
+} from "firebase/firestore";
 
-import { Logo, Service } from "../components";
+import { BrownButton, Logo, Service } from "../components";
+import { UserContext } from "../contexts/UserContext";
+import { auth, db } from "../firebase-config";
 
 import { arrow, clock } from "../images";
 import servicesData from "../services-data.json";
 import { serviceBrands } from "../service-brands";
+import { async } from "@firebase/util";
 let brands = serviceBrands();
 
 //hour termins 8-15, without 16 - to close service on time
@@ -16,7 +27,7 @@ for (let i = startWorkingHour; i < endWorkingHour; i++) {
   hourTermins.push(i);
 }
 
-const NewOrder = () => {
+const NewOrder = ({ updateOrderState }) => {
   const [brand, setBrand] = useState("");
   const [isBrandDropdownActive, setIsBrandDropdownActive] = useState(false);
   const [model, setModel] = useState("");
@@ -24,21 +35,52 @@ const NewOrder = () => {
   const [modelTempYear, setModelTempYear] = useState("");
   const [modelYear, setModelYear] = useState("");
   const [isYearAlertActive, setIsYearAlertActive] = useState(false);
-  const [milleage, setMilleage] = useState("");
+  const [mileage, setMileage] = useState("");
   const [date, setDate] = useState("");
   const [hour, setHour] = useState("");
   const [selectedMotorcycle, setSelectedMotorcycle] = useState("");
   const [isServiceTabActive, setIsServiceTabActive] = useState(false);
   const [tempPrice, setTempPrice] = useState(0);
   const [finalPrice, setFinalPrice] = useState(0);
-  const [displayedData, setDisplayedData] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
   const [isChainChange, setIsChainChange] = useState(false);
   const [isOilChange, setIsOilChange] = useState(false);
   const [isAirChange, setIsAirChange] = useState(false);
   const [isBrakeChange, setIsBrakeChange] = useState(false);
+  const [currentTime, setCurrentTime] = useState("");
+  const [appliedDiscount, setAppliedDiscount] = useState("");
+
+  const { user } = useContext(UserContext);
+
+  const navigate = useNavigate();
 
   const addedServiceRef = useRef(null);
+
+  const handleSubmitOrder = async () => {
+    console.log("radim nesto");
+    const orderId = `${Math.random().toString().replace(".", "").slice(0, 10)}`;
+    const order = {
+      orderId,
+      brand,
+      model,
+      modelYear,
+      mileage,
+      date,
+      hour,
+      selectedServices,
+      tempPrice,
+      appliedDiscount,
+      finalPrice,
+    };
+    const userRef = doc(db, "users", user.uid, "orders", orderId);
+    try {
+      await setDoc(userRef, order);
+      navigate("/my-orders", { state: { newOrder: true } });
+      updateOrderState(true);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   const handleSelectedBrand = (brand) => {
     setBrand(brand);
@@ -64,7 +106,17 @@ const NewOrder = () => {
   };
 
   const handleDate = (date) => {
-    setDate(new Date(date));
+    let selectedDate = new Date(date);
+    console.log(selectedDate.getDate());
+    console.log(selectedDate.getMonth());
+    let day = selectedDate.getDate();
+    let month = selectedDate.getMonth();
+    let year = selectedDate.getFullYear();
+    setDate({
+      day,
+      month,
+      year,
+    });
   };
 
   const handleHour = (hour) => {
@@ -96,22 +148,40 @@ const NewOrder = () => {
       );
       setSelectedServices(filteredServices);
     }
+    let date = new Date();
+    let month = date.toLocaleString("default", { month: "long" });
+    let day = date.getDate();
+    let year = date.getFullYear();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    console.log(minutes);
+    let fullTime = `${month} ${day}, ${year} at ${hours}:${minutes}`;
+    setCurrentTime(fullTime);
   };
 
   const handleFinalPrice = () => {
     if (isChainChange && isOilChange && isAirChange && isBrakeChange) {
-      //40 eur off
+      //40 $ off
       setFinalPrice(tempPrice - 40);
+      setAppliedDiscount("40$");
     } else if (isChainChange && isOilChange && isAirChange) {
       //20% off
-      setFinalPrice(tempPrice * 0.8);
+      setFinalPrice(Math.round((tempPrice * 0.8 + Number.EPSILON) * 100) / 100);
+      setAppliedDiscount("20%");
     } else if (isOilChange && isAirChange) {
-      //20 eur off
+      //20 $ off
       setFinalPrice(tempPrice - 20);
+      setAppliedDiscount("20$");
     } else if (isChainChange && isBrakeChange) {
       //15% off
-      setFinalPrice(tempPrice * 0.85);
-    } else setFinalPrice(tempPrice);
+      setFinalPrice(
+        Math.round((tempPrice * 0.85 + Number.EPSILON) * 100) / 100
+      );
+      setAppliedDiscount("15%");
+    } else {
+      setFinalPrice(tempPrice);
+      setAppliedDiscount("");
+    }
   };
 
   useEffect(() => {
@@ -132,14 +202,14 @@ const NewOrder = () => {
   }, [brand, model, modelYear]);
 
   return (
-    <section className="container pt-95 flex justify-between">
+    <section className="container py-95 flex justify-between">
       <div className="pr-45 w-7/10">
         <Logo />
         <h1 className="mt-25 text-24 font-semibold text-primary pt-4 capitalize">
           new order
         </h1>
         <div className="flex">
-          <div className="w-295 pr-45 pb-45">
+          <div className="w-295 pr-45">
             {/* select brand */}
             <p className="text-10 pt-12 pb-4 w-max text-secondary capitalize">
               select brand
@@ -236,16 +306,16 @@ const NewOrder = () => {
                 *Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               </p>
             )}
-            {/* milleage */}
+            {/* mileage */}
             <p className="text-10 pt-12 pb-4 w-max text-secondary capitalize">
               milleage
             </p>
             <input
               type="number"
-              id="milleage"
-              name="milleage"
-              placeholder="Enter milleage"
-              onChange={(e) => setMilleage(e.target.value)}
+              id="mileage"
+              name="mileage"
+              placeholder="Enter mileage"
+              onChange={(e) => setMileage(e.target.value)}
               className="w-full text-primary text-14 px-16 py-10 border-1 rounded-lg bg-transparent placeholder-primary-50 border-input-grey"
             />
           </div>
@@ -284,7 +354,7 @@ const NewOrder = () => {
               type of service
             </p>
             {isServiceTabActive && (
-              <div className="w-full">
+              <div className="w-full pb-22">
                 {Object.keys(selectedMotorcycle["Service"]).map((key) => {
                   return (
                     <Service
@@ -292,16 +362,92 @@ const NewOrder = () => {
                       key={key}
                       objectKey={key}
                       addService={handleAddService}
+                      serviceCheckbox={true}
                     />
                   );
                 })}
               </div>
             )}
+            {/* discount options */}
+            <h4 className="text-secondary text-12 font-bold pb-8">
+              Note: Consider discount options
+            </h4>
+            <ul className="text-10 text-discounts-grey">
+              <li>
+                <span className="font-semibold">40 $ OFF</span> for full service
+              </li>
+              <li>
+                <span className="font-semibold">20% OFF</span> - Chain change +
+                Oil and oil filter change + Air filter change
+              </li>
+              <li>
+                <span className="font-semibold">20 $ OFF</span> - Oil and oil
+                filter change + Air filter change
+              </li>
+              <li>
+                <span className="font-semibold">15% OFF</span> - Chain change +
+                Brake fluid change
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-      <div ref={addedServiceRef}>{tempPrice}</div>
-      <div>{finalPrice}</div>
+      {/* order summary */}
+      <div className="w-3/10">
+        <div className="border-1 border-solid rounded-lg border-input-grey pl-30 pt-25 pr-24 pb-15">
+          <h2 className="text-16 text-secondary font-semibold capitalize pb-10">
+            order summary
+          </h2>
+          {currentTime && (
+            <p className="text-14 text-secondary pb-40">{currentTime}</p>
+          )}
+          {selectedServices.length != 0 && (
+            <div className="border-b-1 border-solid border-prev-grey pb-8 px-4">
+              {selectedServices.map((selectedService) => {
+                return (
+                  <Service
+                    selectedMotorcycle={selectedMotorcycle}
+                    key={`prev${selectedService.objectKey}`}
+                    objectKey={selectedService.objectKey}
+                  />
+                );
+              })}
+            </div>
+          )}
+          {(tempPrice != 0 || appliedDiscount || finalPrice != 0) && (
+            <div className="pt-24 pb-150 w-max ml-auto mr-0 text-14 text-secondary capitalize flex flex-col">
+              {tempPrice != 0 && (
+                <div className="pb-2 flex justify-between">
+                  <p>full price:</p>
+                  <p className="pl-20">{tempPrice}$</p>
+                </div>
+              )}
+              {appliedDiscount && (
+                <div className="pb-2 flex justify-between">
+                  <p>discount:</p>
+                  <p className="pl-20">{appliedDiscount}</p>
+                </div>
+              )}
+              {finalPrice != 0 && (
+                <div className="mr-0 ml-auto">
+                  <p className="font-semibold text-16 inline">price:</p>
+                  <p className="pl-20 inline">{finalPrice}$</p>
+                </div>
+              )}
+            </div>
+          )}
+          {finalPrice != 0 && (
+            <div className="w-max flex items-center ml-auto mr-0">
+              <p className="text-12 text-secondary capitalize pr-16 cursor-pointer">
+                cancel order
+              </p>
+              <div className="w-max" onClick={handleSubmitOrder}>
+                <BrownButton text={"create order"} />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
     </section>
   );
 };
