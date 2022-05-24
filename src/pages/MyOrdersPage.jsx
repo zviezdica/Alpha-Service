@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 import {
   collection,
   deleteDoc,
@@ -15,6 +16,7 @@ import { auth, db } from "../firebase-config";
 import { alphaWhite, motorcycle2, motorcycle3 } from "../images";
 
 const MyOrdersPage = ({ newOrderId }) => {
+  const isMediumScreen = useMediaQuery({ query: "(min-width: 992px)" });
   const [orders, setOrders] = useState([]);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
@@ -49,8 +51,8 @@ const MyOrdersPage = ({ newOrderId }) => {
   }, [user]);
 
   return (
-    <section className="container pt-95 flex justify-between">
-      <div className="pr-25 w-7/10">
+    <section className="container pt-60 flex flex-col justify-between xs:pt-95 md:flex-row">
+      <div className=" w-full md:w-7/10 md:pr-25">
         <div className="flex justify-between">
           <Logo />
           <div className="w-max" onClick={handleNewOrder}>
@@ -65,7 +67,7 @@ const MyOrdersPage = ({ newOrderId }) => {
         </p>
         <div className="w-full h-350 relative">
           {orders.length === 0 && (
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center ">
               <p className="text-14 text-secondary pb-10">You have no orders</p>
               <p
                 className="text-12 font-bold text-brown capitalize cursor-pointer hover:text-primary transition-color"
@@ -76,14 +78,14 @@ const MyOrdersPage = ({ newOrderId }) => {
             </div>
           )}
           {orders && (
-            <div className="pt-30">
+            <div className="pt-30 ">
               <div className="flex justify-between items-center w-9/10 mr-15 px-24 py-6 text-10 text-secondary capitalize">
-                <p>order ID</p>
-                <p>service date</p>
-                <p>brand</p>
-                <p>mileage</p>
+                <p className="pr-10">order ID</p>
+                <p className="pr-10">service date</p>
+                <p className="pr-10">brand</p>
+                <p className="pr-10">mileage</p>
               </div>
-              <div className="h-50vh overflow-y-scroll">
+              <div className="h-50vh overflow-y-auto overflow-x-auto">
                 {orders.map((order) => {
                   return (
                     <SubmittedOrder orderData={order} key={order.orderId} />
@@ -95,8 +97,8 @@ const MyOrdersPage = ({ newOrderId }) => {
         </div>
       </div>
 
-      <div className="flex w-3/10 items-center justify-center relative">
-        {!newOrderId && (
+      <div className="flex w-full py-30 mx-auto items-center justify-center relative xs:w-3/5 sm:w-1/2 md:w-3/10 md:py-0">
+        {!newOrderId && isMediumScreen && (
           <div className="w-max relative ">
             <img
               src={alphaWhite}
@@ -112,7 +114,7 @@ const MyOrdersPage = ({ newOrderId }) => {
         )}
         {newOrderId && (
           <div
-            className="w-full h-80vh p-30 border-1 border-solid border-input-grey rounded-lg relative bg-contain bg-no-repeat bg-bottom  text-secondary"
+            className="w-full h-80vh p-30 border-1 border-solid border-input-grey rounded-lg relative bg-contain bg-no-repeat bg-bottom text-secondary"
             style={{ backgroundImage: `url(${motorcycle3})` }}
           >
             <h2 className="text-24 font-semibold leading-8">
