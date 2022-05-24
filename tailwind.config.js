@@ -4,20 +4,15 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     screens: {
+      // => @media (min-width)
       "2xs": "360px",
-      // => @media (min-width: 360px) { ... }
       xs: "450px",
-      // => @media (min-width: 576px) { ... }
+      s: "576px",
       sm: "768px",
-      // => @media (min-width: 768px) { ... }
       md: "992px",
-      // => @media (min-width: 992px) { ... }
       lg: "1300px",
-      // => @media (min-width: 1300px) { ... }
       xl: "1536px",
-      // => @media (min-width: 1920px) { ... }
       "2xl": "1920px",
-      // => @media (min-width: 1536px) { ... }
     },
     fontSize: {
       8: "8px",
@@ -43,7 +38,9 @@ module.exports = {
       32: "32px",
       35: "35px",
       42: "42px",
+      //45
       45: "45px",
+      //60
       60: "60px",
       "3vw": "3vw",
       "4vw": "4vw",
@@ -132,6 +129,7 @@ module.exports = {
       46: "46px",
       48: "48px",
       49: "49px",
+      //50
       50: "50px",
       55: "55px",
       56: "56px",
@@ -197,6 +195,8 @@ module.exports = {
       235: "235px",
       250: "250px",
       256: "256px",
+      //280
+      280: "280px",
       292: "292px",
       //295
       295: "295px",
@@ -280,7 +280,7 @@ module.exports = {
       "95vw": "95vw",
       "120vw": "120vw",
       "135vw": "135vw",
-
+      "4vh": "4vh",
       "40vh": "40vh",
       "40vh": "40vh",
       "50vh": "50vh",

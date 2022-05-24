@@ -24,7 +24,6 @@ const LoginPageForm = () => {
   const handleLoginPageForm = (e) => {
     e.preventDefault();
     if (!email || !password) {
-      console.log("missing");
       showAlert("Please provide email and password", "danger");
       return;
     }
@@ -36,7 +35,7 @@ const LoginPageForm = () => {
   };
 
   return (
-    <form className="w-295 pt-20" onSubmit={handleLoginPageForm}>
+    <form className="w-full 2xs:w-295 pt-20" onSubmit={handleLoginPageForm}>
       <label htmlFor="email" className="text-10 text-secondary">
         Email Adress:
       </label>
@@ -59,22 +58,19 @@ const LoginPageForm = () => {
         onChange={handlePasswordTyping}
         className="w-full text-primary text-14 px-16 py-10 mb-10 border-1 border-input-grey rounded-lg bg-transparent"
       />
-      {userAction === "register" ? (
-        <div className="flex items-center">
-          <input
-            type="checkbox"
-            id="rememberUser"
-            name="rememberUser"
-            className="h-15 w-15 mr-10 border-input-grey border-solid border-1 rounded-full bg-transparent text-primary"
-          ></input>
-          <label htmlFor="rememberUser" className="text-10 text-secondary">
-            Remember me
-          </label>
+      {userAction === "login" && (
+        <div className="flex justify-between text-10 text-secondary">
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="rememberUser"
+              name="rememberUser"
+              className="h-15 w-15 mr-10 border-input-grey border-solid border-1 rounded-full bg-transparent text-primary"
+            ></input>
+            <label htmlFor="rememberUser">Remember me</label>
+          </div>
+          <h4 className="w-max mr-0 ml-auto">Forgot password?</h4>
         </div>
-      ) : (
-        <h4 className="text-10 w-max text-secondary mr-0 ml-auto">
-          Forgot password?
-        </h4>
       )}
       <button
         type="submit"
