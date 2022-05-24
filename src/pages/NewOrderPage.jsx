@@ -16,7 +16,7 @@ import { auth, db } from "../firebase-config";
 import { arrow, clock } from "../images";
 import servicesData from "../services-data.json";
 import { serviceBrands } from "../service-brands";
-import { async } from "@firebase/util";
+
 let brands = serviceBrands();
 
 //hour termins 8-15, without 16 - to close service on time :)
@@ -27,7 +27,7 @@ for (let i = startWorkingHour; i < endWorkingHour; i++) {
   hourTermins.push(i);
 }
 
-const NewOrder = ({ newOrderUpdate }) => {
+const NewOrderPage = ({ newOrderUpdate }) => {
   const [brand, setBrand] = useState("");
   const [isBrandDropdownActive, setIsBrandDropdownActive] = useState(false);
   const [model, setModel] = useState("");
@@ -49,6 +49,9 @@ const NewOrder = ({ newOrderUpdate }) => {
   const [isBrakeChange, setIsBrakeChange] = useState(false);
   const [currentTime, setCurrentTime] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState("");
+
+  console.log(appliedDiscount);
+  console.log(appliedDiscount);
 
   const { user } = useContext(UserContext);
 
@@ -97,12 +100,14 @@ const NewOrder = ({ newOrderUpdate }) => {
     let lastSupportedYear = servicesData.filter(
       (data) => data["Brand"] === brand && data["Model"] === model
     )[0]["Last supported year"];
-    if (parseInt(modelTempYear) < lastSupportedYear) {
-      setIsYearAlertActive(true);
-    } else {
-      setIsYearAlertActive(false);
-      setModelYear(modelTempYear);
-    }
+    if (lastSupportedYear) {
+      if (parseInt(modelTempYear) < lastSupportedYear) {
+        setIsYearAlertActive(true);
+      } else {
+        setIsYearAlertActive(false);
+        setModelYear(modelTempYear);
+      }
+    } else setIsYearAlertActive(false);
   };
 
   const handleDate = (date) => {
@@ -198,11 +203,45 @@ const NewOrder = ({ newOrderUpdate }) => {
     }
     if (brand && model && modelYear) {
       setIsServiceTabActive(true);
+    } else {
+      setSelectedMotorcycle("");
+      setIsServiceTabActive(false);
     }
   }, [brand, model, modelYear]);
 
+  const resetOrderData = () => {
+    setModelTempYear("");
+    setModelYear("");
+    setIsServiceTabActive(false);
+    setSelectedServices([]);
+    setTempPrice(0);
+    setFinalPrice(0);
+    setIsChainChange(false);
+    setIsOilChange(false);
+    setIsAirChange(false);
+    setIsBrakeChange(false);
+    setAppliedDiscount("");
+    setCurrentTime("");
+    setDate("");
+    setHour("");
+    setMileage("");
+  };
+
+  const handleCancelOrder = () => {
+    setBrand("");
+  };
+
+  useEffect(() => {
+    resetOrderData();
+  }, [model]);
+
+  useEffect(() => {
+    setModel("");
+    resetOrderData();
+  }, [brand]);
+
   return (
-    <section className="container py-95 flex justify-between">
+    <section className="container pt-95 pb-50 flex justify-between">
       <div className="pr-45 w-7/10">
         <Logo />
         <h1 className="mt-25 text-24 font-semibold text-primary pt-4 capitalize">
@@ -239,7 +278,7 @@ const NewOrder = ({ newOrderUpdate }) => {
                   <p
                     key={brand}
                     onClick={() => handleSelectedBrand(brand)}
-                    className="text-14 text-primary-50 cursor-pointer hover:text-secondary"
+                    className="text-14 text-primary-50 cursor-pointer hover:text-secondary pb-8"
                   >
                     {brand}
                   </p>
@@ -252,7 +291,11 @@ const NewOrder = ({ newOrderUpdate }) => {
             </p>
             <div
               className="w-full px-16 py-10 border-1 border-solid border-input-grey rounded-lg bg-transparent flex justify-between items-center cursor-pointer"
-              onClick={() => setIsModelDropdownActive(!isModelDropdownActive)}
+              onClick={
+                brand
+                  ? () => setIsModelDropdownActive(!isModelDropdownActive)
+                  : null
+              }
             >
               <p className="inline-block text-primary-50 text-14">
                 {model ? model : "Select model"}
@@ -278,7 +321,7 @@ const NewOrder = ({ newOrderUpdate }) => {
                     <p
                       key={model}
                       onClick={() => handleSelectedModel(model)}
-                      className="text-14 text-primary-50 cursor-pointer hover:text-secondary"
+                      className="text-14 text-primary-50 cursor-pointer hover:text-secondary  pb-8"
                     >
                       {model}
                     </p>
@@ -294,6 +337,7 @@ const NewOrder = ({ newOrderUpdate }) => {
               id="modelYear"
               name="modelYear"
               placeholder="Enter model year"
+              value={modelTempYear}
               onChange={(e) => setModelTempYear(e.target.value)}
               onBlur={handleModelYear}
               className={
@@ -314,6 +358,7 @@ const NewOrder = ({ newOrderUpdate }) => {
               type="number"
               id="mileage"
               name="mileage"
+              value={mileage}
               placeholder="Enter mileage"
               onChange={(e) => setMileage(e.target.value)}
               className="w-full text-primary text-14 px-16 py-10 border-1 rounded-lg bg-transparent placeholder-primary-50 border-input-grey"
@@ -322,12 +367,12 @@ const NewOrder = ({ newOrderUpdate }) => {
 
           <div className="mt-30">
             {/* select date and time */}
-            <div className="border-1 border-solid rounded-lg border-input-grey h-160 flex">
+            <div className="border-1 border-solid rounded-lg border-input-grey h-160 flex w-max">
               <DatePicker onChange={(date) => handleDate(date)} />
               <div
                 className={
                   "h-full flex flex-col items-center transition-all " +
-                  (date ? "scale-x-1 max-w-16" : "scale-x-0 max-w-0")
+                  (date ? "scale-x-1 max-w-16" : "scale-x-0 max-w-0 ")
                 }
               >
                 <img src={clock} className="h-15/100 p-2"></img>
@@ -395,11 +440,18 @@ const NewOrder = ({ newOrderUpdate }) => {
       {/* order summary */}
       <div className="w-3/10">
         <div className="border-1 border-solid rounded-lg border-input-grey pl-30 pt-25 pr-24 pb-15">
-          <h2 className="text-16 text-secondary font-semibold capitalize pb-10">
+          <h2 className="text-16 text-secondary font-semibold capitalize pb-5">
             order summary
           </h2>
           {currentTime && (
-            <p className="text-14 text-secondary pb-40">{currentTime}</p>
+            <p className="text-12 text-secondary pb-10">
+              Order date: {currentTime}
+            </p>
+          )}
+          {date && hour && (
+            <p className="text-14 text-secondary pb-40">
+              Service date: {date.day}/{date.month + 1}/{date.year} at {hour}:00
+            </p>
           )}
           {selectedServices.length != 0 && (
             <div className="border-b-1 border-solid border-prev-grey pb-8 px-4">
@@ -438,7 +490,10 @@ const NewOrder = ({ newOrderUpdate }) => {
           )}
           {finalPrice != 0 && (
             <div className="w-max flex items-center ml-auto mr-0">
-              <p className="text-12 text-secondary capitalize pr-16 cursor-pointer">
+              <p
+                className="text-12 text-secondary capitalize pr-16 cursor-pointer"
+                onClick={handleCancelOrder}
+              >
                 cancel order
               </p>
               <div className="w-max" onClick={handleSubmitOrder}>
@@ -452,4 +507,4 @@ const NewOrder = ({ newOrderUpdate }) => {
   );
 };
 
-export default NewOrder;
+export default NewOrderPage;

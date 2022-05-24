@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import { useRoutes } from "react-router-dom";
 
-import {
-  LoginPage,
-  MyOrdersPage,
-  NewOrderPage,
-  OrderConfirmationPage,
-} from "../pages";
+import { LoginPage, MyOrdersPage, NewOrderPage } from "../pages";
 
 const Routes = ({ newOrderUpdate, newOrderId }) => {
   let routes = useRoutes([
@@ -20,7 +15,6 @@ const Routes = ({ newOrderUpdate, newOrderId }) => {
       path: "/new-order",
       element: <NewOrderPage newOrderUpdate={newOrderUpdate} />,
     },
-    { path: "/order-confirmation", element: <OrderConfirmationPage /> },
   ]);
   return routes;
 };
