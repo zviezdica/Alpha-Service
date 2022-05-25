@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
+import { signOut } from "firebase/auth";
 
 import { Logo, LoginPageForm } from "../components";
 import { motorcycle1 } from "../images";
+import { auth } from "../firebase-config";
+import { UserContext } from "../contexts/UserContext";
 
 const LoginPage = () => {
   const isTablet = useMediaQuery({ query: "(min-width: 768px)" });
+  const { setSuccessfullAuth, setUserAction } = useContext(UserContext);
+
+  useEffect(() => {
+    //logout
+    const logout = async () => {
+      await signOut(auth);
+    };
+    setSuccessfullAuth(false);
+    logout();
+  }, []);
 
   return (
     <section className="h-screen sm:flex container container-home pt-110 relative">

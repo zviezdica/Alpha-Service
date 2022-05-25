@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { updatePassword } from "firebase/auth";
 
@@ -21,6 +21,8 @@ const LoginPageForm = () => {
     setUserCredentials,
     userAction,
     setUserAction,
+    successfullAuth,
+    setSuccessfullAuth,
   } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -28,7 +30,7 @@ const LoginPageForm = () => {
   const handleEmailTyping = (e) => {
     if (validEmail.test(e.target.value)) {
       setEmail(e.target.value);
-    } else console.log("ne valja");
+    } else return;
   };
 
   const handlePasswordTyping = (e) => {
@@ -52,7 +54,7 @@ const LoginPageForm = () => {
     setIsResetWindowOpened(!isResetWindowOpened);
   };
 
-  const handleLoginPageForm = (e) => {
+  const handleLoginPageForm = async (e) => {
     e.preventDefault();
     if (!email || !password) {
       showAlert("Please provide email and password", "danger");
@@ -60,10 +62,22 @@ const LoginPageForm = () => {
     }
     if (email && password) {
       setUserCredentials({ email, password });
-      console.log(userCredentials);
+      console.log("jes");
+      console.log(user);
+      // setTimeout(() => {
+      //   if (successfullAuth) {
+      //     console.log(user);
+      //     console.log(userCredentials);
       navigate("/my-orders");
+      //   }
+      // }, 100);
     }
   };
+
+  // useEffect(() => {
+  //   if (!successfullAuth) return;
+  //   navigate("/my-orders");
+  // }, [successfullAuth]);
 
   return (
     <div className="w-full 2xs:w-295 pt-20">
@@ -76,6 +90,7 @@ const LoginPageForm = () => {
           type="email"
           id="email"
           name="email"
+          autoComplete="email"
           onChange={handleEmailTyping}
           className="w-full text-primary text-14 px-16 py-10 border-1 border-input-grey rounded-lg bg-transparent"
         />
@@ -90,6 +105,7 @@ const LoginPageForm = () => {
           type="password"
           id="pass"
           name="pass"
+          autoComplete="current-password"
           onChange={handlePasswordTyping}
           className="w-full text-primary text-14 px-16 py-10 mb-10 border-1 border-input-grey rounded-lg bg-transparent"
         />
@@ -159,6 +175,7 @@ const LoginPageForm = () => {
             type="email"
             id="emailConfirm"
             name="emailConfirm"
+            autoComplete="email"
             className="w-full text-primary text-14 px-16 py-10 border-1 border-input-grey rounded-lg bg-transparent"
           />
           <br />
@@ -172,6 +189,7 @@ const LoginPageForm = () => {
             type="password"
             id="newPass"
             name="newPass"
+            autoComplete="new-password"
             onChange={handleResetPasswordTyping}
             className="w-full text-primary text-14 px-16 py-10 mb-10 border-1 border-input-grey rounded-lg bg-transparent"
           />

@@ -23,6 +23,7 @@ import { AlertContext } from "../contexts/AlertContext";
 const AlphaServiceApp = () => {
   const [userCredentials, setUserCredentials] = useState(null);
   const [userAction, setUserAction] = useState("login");
+  const [successfullAuth, setSuccessfullAuth] = useState(false);
   const [user, setUser] = useState("");
   const [isAlert, setIsAlert] = useState(false);
   const [alertText, setAlertText] = useState("");
@@ -45,11 +46,11 @@ const AlphaServiceApp = () => {
   // authentication
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user) {
+      if (successfullAuth) {
         setUser(user);
-      }
+      } else setUser("");
     });
-  }, [userCredentials]);
+  }, [successfullAuth]);
 
   //sign up
   const register = async () => {
@@ -59,10 +60,13 @@ const AlphaServiceApp = () => {
         userCredentials.email,
         userCredentials.password
       );
-      // newUser && setUser(newUser.user);
-      showAlert(`User ${user.email} successfully registered`, "success");
+      if (user) {
+        setSuccessfullAuth(true);
+        showAlert(`User ${user.email} successfully registered`, "success");
+      }
     } catch (error) {
-      showAlert("not registered", "danger");
+      setSuccessfullAuth(false);
+      showAlert("Please provide correct email and password", "danger");
       console.log(error.message);
     }
   };
@@ -75,20 +79,21 @@ const AlphaServiceApp = () => {
         userCredentials.email,
         userCredentials.password
       );
-      // existingUser && setUser(existingUser.user);
+      if (user) {
+        setSuccessfullAuth(true);
+      }
     } catch (error) {
+      setSuccessfullAuth(false);
+      console.log(userCredentials);
+      showAlert("Please provide correct email and password", "danger");
       console.log(error.message);
     }
   };
 
-  //logout
-  const logout = async () => {
-    await signOut(auth);
-  };
-
   useEffect(() => {
     if (!userCredentials) return;
-    userAction === "register" ? register() : login();
+    userAction === "login" && login();
+    userAction === "register" && register();
     console.log(userAction);
   }, [userCredentials]);
 
@@ -102,6 +107,9 @@ const AlphaServiceApp = () => {
             userAction,
             setUserAction,
             user,
+            successfullAuth,
+            setSuccessfullAuth,
+            setUserAction,
           }}
         >
           <Router>
