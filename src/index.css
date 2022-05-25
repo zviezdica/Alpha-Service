@@ -43,7 +43,7 @@ input[type=number] {
 /* using important to override default styles */
 .sdp{
     
-    @apply bg-transparent w-295 text-14 !important;
+    @apply bg-transparent w-280 2xs:w-295 text-12 2xs:text-14 !important;
     --theme-color: #22160F !important;
     --font: "Poppins" !important;
     --shadow: "none" !important;

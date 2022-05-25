@@ -241,14 +241,14 @@ const NewOrderPage = ({ newOrderUpdate }) => {
   }, [brand]);
 
   return (
-    <section className="container pt-95 pb-50 flex justify-between">
-      <div className="pr-45 w-7/10">
+    <section className="container container-md pt-95 pb-20 flex flex-wrap justify-between">
+      <div className="w-full m:w-7/10">
         <Logo />
         <h1 className="mt-25 text-24 font-semibold text-primary pt-4 capitalize">
           new order
         </h1>
-        <div className="flex">
-          <div className="w-295 pr-45">
+        <div className="flex flex-wrap s:flex-nowrap justify-between">
+          <div className="w-full s:w-295 ">
             {/* select brand */}
             <p className="text-10 pt-12 pb-4 w-max text-secondary capitalize">
               select brand
@@ -365,7 +365,7 @@ const NewOrderPage = ({ newOrderUpdate }) => {
             />
           </div>
 
-          <div className="mt-30">
+          <div className="mt-30 s:px-30 w-full  s:w-auto">
             {/* select date and time */}
             <div className="border-1 border-solid rounded-lg border-input-grey h-160 flex w-max">
               <DatePicker onChange={(date) => handleDate(date)} />
@@ -438,8 +438,8 @@ const NewOrderPage = ({ newOrderUpdate }) => {
         </div>
       </div>
       {/* order summary */}
-      <div className="w-3/10">
-        <div className="border-1 border-solid rounded-lg border-input-grey pl-30 pt-25 pr-24 pb-15">
+      <div className="w-full s:w-1/2 pt-30 m:pt-0 m:w-3/10">
+        <div className="border-1 border-solid rounded-lg border-input-grey pl-30 pt-25 pr-24 pb-24">
           <h2 className="text-16 text-secondary font-semibold capitalize pb-5">
             order summary
           </h2>
@@ -489,7 +489,7 @@ const NewOrderPage = ({ newOrderUpdate }) => {
             </div>
           )}
           {finalPrice != 0 && (
-            <div className="w-max flex items-center ml-auto mr-0">
+            <div className="w-full flex flex-wrap items-center justify-end ml-auto mr-0">
               <p
                 className="text-12 text-secondary capitalize pr-16 cursor-pointer"
                 onClick={handleCancelOrder}

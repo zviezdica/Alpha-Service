@@ -114,13 +114,12 @@ const MyOrdersPage = ({ newOrderId }) => {
         )}
         {newOrderId && (
           <div
-            className="w-full h-80vh p-30 border-1 border-solid border-input-grey rounded-lg relative bg-contain bg-no-repeat bg-bottom text-secondary"
+            className="w-full h-80vh mt-20 md:mt-0 p-30 border-1 border-solid border-input-grey rounded-lg relative bg-contain bg-no-repeat bg-bottom text-secondary"
             style={{ backgroundImage: `url(${motorcycle3})` }}
           >
             <h2 className="text-24 font-semibold leading-8">
               Thank you <br />
               for your order: <br />
-              {/* <span className="text-16">#{newOrderId}!</span> */}
             </h2>
             <p className="text-16 font-semibold pb-20">#{newOrderId}!</p>
             <p className="text-14">

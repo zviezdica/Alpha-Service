@@ -9,6 +9,7 @@ module.exports = {
       xs: "450px",
       s: "576px",
       sm: "768px",
+      m: "850px",
       md: "992px",
       lg: "1300px",
       xl: "1536px",
@@ -561,6 +562,10 @@ module.exports = {
         ".container-home": {
           width: "85%",
         },
+        ".container-md": {
+          maxWidth: "1100px",
+        },
+
         // ".container-2": {
         //   width: "104%",
         //   maxWidth: "1400px",
