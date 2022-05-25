@@ -1,24 +1,55 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { updatePassword } from "firebase/auth";
 
 import { UserContext } from "../../contexts/UserContext";
 import { AlertContext } from "../../contexts/AlertContext";
 
+const validEmail = new RegExp(
+  "^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,3}$"
+);
+
 const LoginPageForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isResetWindowOpened, setIsResetWindowOpened] = useState(false);
+  const [resetPassword, setResetPassword] = useState("");
   const { showAlert } = useContext(AlertContext);
-  const { userCredentials, setUserCredentials, userAction, setUserAction } =
-    useContext(UserContext);
+  const {
+    user,
+    userCredentials,
+    setUserCredentials,
+    userAction,
+    setUserAction,
+  } = useContext(UserContext);
 
   const navigate = useNavigate();
 
   const handleEmailTyping = (e) => {
-    setEmail(e.target.value);
+    if (validEmail.test(e.target.value)) {
+      setEmail(e.target.value);
+    } else console.log("ne valja");
   };
 
   const handlePasswordTyping = (e) => {
     setPassword(e.target.value);
+  };
+
+  const handleResetPasswordTyping = (e) => {
+    setResetPassword(e.target.value);
+  };
+
+  const handleResetPassword = () => {
+    updatePassword(user, resetPassword)
+      .then(() => {
+        isResetWindowOpened(false);
+        console.log("lozinka promijenjena");
+      })
+      .catch((error) => console.log(error.message));
+  };
+
+  const handleForgotPassword = () => {
+    setIsResetWindowOpened(!isResetWindowOpened);
   };
 
   const handleLoginPageForm = (e) => {
@@ -35,73 +66,126 @@ const LoginPageForm = () => {
   };
 
   return (
-    <form className="w-full 2xs:w-295 pt-20" onSubmit={handleLoginPageForm}>
-      <label htmlFor="email" className="text-10 text-secondary">
-        Email Adress:
-      </label>
-      <br />
-      <input
-        type="email"
-        id="email"
-        name="email"
-        onChange={handleEmailTyping}
-        className="w-full text-primary text-14 px-16 py-10 border-1 border-input-grey rounded-lg bg-transparent"
-      />
-      <br />
-      <label htmlFor="pass" className="block text-10 text-secondary pt-12 pb-8">
-        Password:
-      </label>
-      <input
-        type="password"
-        id="pass"
-        name="pass"
-        onChange={handlePasswordTyping}
-        className="w-full text-primary text-14 px-16 py-10 mb-10 border-1 border-input-grey rounded-lg bg-transparent"
-      />
-      {userAction === "login" && (
-        <div className="flex justify-between text-10 text-secondary">
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="rememberUser"
-              name="rememberUser"
-              className="h-15 w-15 mr-10 border-input-grey border-solid border-1 rounded-full bg-transparent text-primary"
-            ></input>
-            <label htmlFor="rememberUser">Remember me</label>
+    <div className="w-full 2xs:w-295 pt-20">
+      <form className="w-full " onSubmit={handleLoginPageForm}>
+        <label htmlFor="email" className="text-10 text-secondary">
+          Email Adress:
+        </label>
+        <br />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          onChange={handleEmailTyping}
+          className="w-full text-primary text-14 px-16 py-10 border-1 border-input-grey rounded-lg bg-transparent"
+        />
+        <br />
+        <label
+          htmlFor="pass"
+          className="block text-10 text-secondary pt-12 pb-8"
+        >
+          Password:
+        </label>
+        <input
+          type="password"
+          id="pass"
+          name="pass"
+          onChange={handlePasswordTyping}
+          className="w-full text-primary text-14 px-16 py-10 mb-10 border-1 border-input-grey rounded-lg bg-transparent"
+        />
+        {userAction === "login" && (
+          <div className="flex justify-between text-10 text-secondary">
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="rememberUser"
+                name="rememberUser"
+                className="h-15 w-15 mr-10 border-input-grey border-solid border-1 rounded-full bg-transparent text-primary"
+              ></input>
+              <label htmlFor="rememberUser">Remember me</label>
+            </div>
+            <h4 className="w-max mr-0 ml-auto" onClick={handleForgotPassword}>
+              Forgot password?
+            </h4>
           </div>
-          <h4 className="w-max mr-0 ml-auto">Forgot password?</h4>
-        </div>
-      )}
-      <button
-        type="submit"
-        value="submit"
-        className="w-full mt-25 mb-16 py-14 text-12 font-bold bg-brown text-white rounded-xl"
+        )}
+        <button
+          type="submit"
+          value="submit"
+          className="w-full mt-25 mb-16 py-14 text-12 font-bold bg-brown text-white rounded-xl"
+        >
+          {userAction === "register" ? "Register" : "Login"}
+        </button>
+        {userAction === "register" ? (
+          <h4 className="text-10 text-secondary text-center">
+            Already have an account?{" "}
+            <span
+              className="text-primary cursor-pointer"
+              onClick={() => setUserAction("login")}
+            >
+              Login
+            </span>
+          </h4>
+        ) : (
+          <h4 className="text-10 text-secondary text-center">
+            Don't have an account?
+            <span
+              className="text-primary cursor-pointer"
+              onClick={() => setUserAction("register")}
+            >
+              {" "}
+              Sign Up
+            </span>
+          </h4>
+        )}
+      </form>
+      <div
+        className={
+          "absolute left-1/2 -translate-x-1/2 p-10 border-2 border-input-grey transition-all duration-200 rounded-lg w-20vw z-1 " +
+          (isResetWindowOpened
+            ? "top-1/2 -translate-y-1/2"
+            : "top-0 -translate-y-full")
+        }
       >
-        {userAction === "register" ? "Register" : "Login"}
-      </button>
-      {userAction === "register" ? (
-        <h4 className="text-10 text-secondary text-center">
-          Already have an account?{" "}
-          <span
-            className="text-primary cursor-pointer"
-            onClick={() => setUserAction("login")}
+        <h2 className="text-16 font-semibold text-secondary">
+          Reset your password
+        </h2>
+        <form>
+          <label htmlFor="emailConfirm" className="text-10 text-secondary">
+            Email Adress:
+          </label>
+          <br />
+          <input
+            type="email"
+            id="emailConfirm"
+            name="emailConfirm"
+            className="w-full text-primary text-14 px-16 py-10 border-1 border-input-grey rounded-lg bg-transparent"
+          />
+          <br />
+          <label
+            htmlFor="newPass"
+            className="block text-10 text-secondary pt-12 pb-8"
           >
-            Login
-          </span>
-        </h4>
-      ) : (
-        <h4 className="text-10 text-secondary text-center">
-          Don't have an account?
-          <span
-            className="text-primary cursor-pointer"
-            onClick={() => setUserAction("register")}
+            Password:
+          </label>
+          <input
+            type="password"
+            id="newPass"
+            name="newPass"
+            onChange={handleResetPasswordTyping}
+            className="w-full text-primary text-14 px-16 py-10 mb-10 border-1 border-input-grey rounded-lg bg-transparent"
+          />
+          <button
+            type="submit"
+            value="submit"
+            className="w-1/2 mt-25 mb-16 py-14 text-12 font-bold bg-brown text-white rounded-xl"
+            onClick={handleResetPassword}
           >
-            {" "}
-            Sign Up
-          </span>
-        </h4>
-      )}
-    </form>
+            Reset password
+          </button>
+        </form>
+      </div>
+    </div>
   );
 };
 

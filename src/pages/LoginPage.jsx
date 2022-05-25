@@ -8,7 +8,7 @@ const LoginPage = () => {
   const isTablet = useMediaQuery({ query: "(min-width: 768px)" });
 
   return (
-    <section className="h-screen sm:flex container container-home pt-110">
+    <section className="h-screen sm:flex container container-home pt-110 relative">
       <div className="mx-auto 2xs:w-max sm:w-1/2">
         <Logo />
         <h2 className="mt-50 text-16 font-semibold text-secondary">
