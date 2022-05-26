@@ -85,6 +85,8 @@ const LoginPageForm = ({ navigateToMyOrders }) => {
           className="block text-10 text-secondary pt-12 pb-8"
         >
           Password:
+          <br />
+          *6 characters at least
         </label>
         <input
           type="password"
@@ -105,7 +107,10 @@ const LoginPageForm = ({ navigateToMyOrders }) => {
               ></input>
               <label htmlFor="rememberUser">Remember me</label>
             </div>
-            <h4 className="w-max mr-0 ml-auto" onClick={handleForgotPassword}>
+            <h4
+              className="w-max mr-0 ml-auto cursor-pointer"
+              onClick={handleForgotPassword}
+            >
               Forgot password?
             </h4>
           </div>
