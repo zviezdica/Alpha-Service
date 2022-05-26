@@ -21,6 +21,7 @@ const MyOrdersPage = ({ newOrderId }) => {
     navigate("/new-order");
   };
 
+  //get all previous orders stored in firestore on every user change
   const handleGetOrders = async () => {
     let ordersArr = [];
     try {

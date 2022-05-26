@@ -49,6 +49,7 @@ const NewOrderPage = ({ newOrderUpdate }) => {
 
   const navigate = useNavigate();
 
+  //check if all fields are filled, then return or procede - store in firestore
   const handleSubmitOrder = async () => {
     if (!modelYear || !mileage || !date || !hour || !selectedServices) {
       showAlert("Please fill all fields", "danger");
@@ -90,6 +91,7 @@ const NewOrderPage = ({ newOrderUpdate }) => {
 
   const handleModelYear = () => {
     if (!modelTempYear) return;
+    //check supported year
     let lastSupportedYear = servicesData.filter(
       (data) => data["Brand"] === brand && data["Model"] === model
     )[0]["Last supported year"];
@@ -184,7 +186,6 @@ const NewOrderPage = ({ newOrderUpdate }) => {
   }, [tempPrice]);
 
   useEffect(() => {
-    // if (!(brand || model)) return;
     if (brand && model) {
       let selectedBike = servicesData.filter(
         (data) => data["Brand"] === brand && data["Model"] === model
@@ -199,6 +200,7 @@ const NewOrderPage = ({ newOrderUpdate }) => {
     }
   }, [brand, model, modelYear]);
 
+  //cancel order function
   const resetOrderData = () => {
     setModelTempYear("");
     setModelYear("");
@@ -217,14 +219,17 @@ const NewOrderPage = ({ newOrderUpdate }) => {
     setMileage("");
   };
 
+  //if order cancel, reser brand which resets the rest of values
   const handleCancelOrder = () => {
     setBrand("");
   };
 
+  //if model changes, reset other values except brand
   useEffect(() => {
     resetOrderData();
   }, [model]);
 
+  //if brand changes, reset all other values
   useEffect(() => {
     setModel("");
     resetOrderData();

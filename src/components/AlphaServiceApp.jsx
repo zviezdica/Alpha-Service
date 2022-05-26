@@ -92,6 +92,7 @@ const AlphaServiceApp = () => {
     }
   };
 
+  //if userCredentials, detect user action and procede
   useEffect(() => {
     if (!userCredentials) return;
     userAction === "login" && login();

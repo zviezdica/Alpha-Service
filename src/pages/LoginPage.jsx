@@ -12,7 +12,7 @@ const LoginPage = ({ navigateToMyOrders }) => {
   const { setSuccessfullAuth } = useContext(UserContext);
 
   useEffect(() => {
-    //logout
+    //logout every time user navigates to /login
     const logout = async () => {
       await signOut(auth);
     };

@@ -1,5 +1,4 @@
 import React from "react";
-
 import { AlphaServiceApp } from "./components";
 
 function App() {

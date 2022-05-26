@@ -58,6 +58,7 @@ const LoginPageForm = ({ navigateToMyOrders }) => {
   };
 
   useEffect(() => {
+    //if user is successfully authenticated
     if (navigateToMyOrders) {
       navigate("/my-orders");
     } else return;
