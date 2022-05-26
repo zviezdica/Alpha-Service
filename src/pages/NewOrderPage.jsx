@@ -1,18 +1,12 @@
-import React, { useEffect, useRef, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "sassy-datepicker";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  setDoc,
-} from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 
 import { BrownButton, Logo, Service } from "../components";
 import { UserContext } from "../contexts/UserContext";
-import { auth, db } from "../firebase-config";
-
+import { db } from "../firebase-config";
+import { AlertContext } from "../contexts/AlertContext";
 import { arrow, clock } from "../images";
 import servicesData from "../services-data.json";
 import { serviceBrands } from "../service-brands";
@@ -50,17 +44,16 @@ const NewOrderPage = ({ newOrderUpdate }) => {
   const [currentTime, setCurrentTime] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState("");
 
-  console.log(appliedDiscount);
-  console.log(appliedDiscount);
-
   const { user } = useContext(UserContext);
+  const { showAlert } = useContext(AlertContext);
 
   const navigate = useNavigate();
 
-  const addedServiceRef = useRef(null);
-
   const handleSubmitOrder = async () => {
-    console.log("radim nesto");
+    if (!modelYear || !mileage || !date || !hour || !selectedServices) {
+      showAlert("Please fill all fields", "danger");
+      return;
+    }
     const orderId = `${Math.random().toString().replace(".", "").slice(0, 10)}`;
     const order = {
       orderId,
@@ -80,8 +73,8 @@ const NewOrderPage = ({ newOrderUpdate }) => {
       await setDoc(userRef, order);
       navigate("/my-orders");
       newOrderUpdate(order.orderId);
-    } catch (error) {
-      console.log(error.message);
+    } catch {
+      showAlert("Ooops something went wrong! Try again later", "danger");
     }
   };
 
@@ -112,8 +105,6 @@ const NewOrderPage = ({ newOrderUpdate }) => {
 
   const handleDate = (date) => {
     let selectedDate = new Date(date);
-    console.log(selectedDate.getDate());
-    console.log(selectedDate.getMonth());
     let day = selectedDate.getDate();
     let month = selectedDate.getMonth();
     let year = selectedDate.getFullYear();
@@ -159,7 +150,6 @@ const NewOrderPage = ({ newOrderUpdate }) => {
     let year = date.getFullYear();
     let hours = date.getHours();
     let minutes = date.getMinutes();
-    console.log(minutes);
     let fullTime = `${month} ${day}, ${year} at ${hours}:${minutes}`;
     setCurrentTime(fullTime);
   };

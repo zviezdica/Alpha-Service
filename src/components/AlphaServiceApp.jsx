@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  setDoc,
-} from "firebase/firestore";
 
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
-  signOut,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
-import { auth, db } from "../firebase-config";
+import { auth } from "../firebase-config";
 import { Routes, Alert } from ".";
 import { UserContext } from "../contexts/UserContext";
 import { AlertContext } from "../contexts/AlertContext";
@@ -29,6 +21,7 @@ const AlphaServiceApp = () => {
   const [alertText, setAlertText] = useState("");
   const [alertPurpose, setAlertPurpose] = useState("");
   const [newOrderId, setNewOrderId] = useState("");
+  const [navigateToMyOrders, setNavigateToMyOrders] = useState(false);
 
   const handleNewOrderUpdate = (orderId) => {
     setNewOrderId(orderId);
@@ -54,39 +47,48 @@ const AlphaServiceApp = () => {
 
   //sign up
   const register = async () => {
+    setSuccessfullAuth(false);
     try {
-      const user = await createUserWithEmailAndPassword(
-        auth,
-        userCredentials.email,
-        userCredentials.password
-      );
-      if (user) {
+      if (userCredentials.password.length >= 6) {
+        const user = await createUserWithEmailAndPassword(
+          auth,
+          userCredentials.email,
+          userCredentials.password
+        );
         setSuccessfullAuth(true);
-        showAlert(`User ${user.email} successfully registered`, "success");
+        setNavigateToMyOrders(true);
+        showAlert(`User successfully registered`, "success");
+      } else {
+        setNavigateToMyOrders(false);
+        return;
       }
-    } catch (error) {
+    } catch {
       setSuccessfullAuth(false);
+      setNavigateToMyOrders(false);
       showAlert("Please provide correct email and password", "danger");
-      console.log(error.message);
     }
   };
 
   //login
   const login = async () => {
     try {
-      const user = await signInWithEmailAndPassword(
-        auth,
-        userCredentials.email,
-        userCredentials.password
-      );
-      if (user) {
+      if (userCredentials.password.length >= 6) {
+        const user = await signInWithEmailAndPassword(
+          auth,
+          userCredentials.email,
+          userCredentials.password
+        );
         setSuccessfullAuth(true);
+        setNavigateToMyOrders(true);
+        showAlert(`User successfully logged in`, "success");
+      } else {
+        setNavigateToMyOrders(false);
+        return;
       }
-    } catch (error) {
+    } catch {
       setSuccessfullAuth(false);
-      console.log(userCredentials);
+      setNavigateToMyOrders(false);
       showAlert("Please provide correct email and password", "danger");
-      console.log(error.message);
     }
   };
 
@@ -94,7 +96,6 @@ const AlphaServiceApp = () => {
     if (!userCredentials) return;
     userAction === "login" && login();
     userAction === "register" && register();
-    console.log(userAction);
   }, [userCredentials]);
 
   return (
@@ -116,6 +117,7 @@ const AlphaServiceApp = () => {
             <Routes
               newOrderUpdate={handleNewOrderUpdate}
               newOrderId={newOrderId}
+              navigateToMyOrders={navigateToMyOrders}
             />
           </Router>
         </UserContext.Provider>

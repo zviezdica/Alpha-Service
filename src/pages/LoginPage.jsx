@@ -7,9 +7,9 @@ import { motorcycle1 } from "../images";
 import { auth } from "../firebase-config";
 import { UserContext } from "../contexts/UserContext";
 
-const LoginPage = () => {
+const LoginPage = ({ navigateToMyOrders }) => {
   const isTablet = useMediaQuery({ query: "(min-width: 768px)" });
-  const { setSuccessfullAuth, setUserAction } = useContext(UserContext);
+  const { setSuccessfullAuth } = useContext(UserContext);
 
   useEffect(() => {
     //logout
@@ -30,7 +30,7 @@ const LoginPage = () => {
         <h1 className="text-24 font-semibold text-primary pt-4">
           alpha service
         </h1>
-        <LoginPageForm />
+        <LoginPageForm navigateToMyOrders={navigateToMyOrders} />
       </div>
       {isTablet && (
         <div className="w-1/2 relative overflow-hidden -mt-100">

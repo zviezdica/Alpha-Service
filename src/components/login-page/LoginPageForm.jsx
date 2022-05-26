@@ -9,21 +9,14 @@ const validEmail = new RegExp(
   "^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,3}$"
 );
 
-const LoginPageForm = () => {
+const LoginPageForm = ({ navigateToMyOrders }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isResetWindowOpened, setIsResetWindowOpened] = useState(false);
   const [resetPassword, setResetPassword] = useState("");
   const { showAlert } = useContext(AlertContext);
-  const {
-    user,
-    userCredentials,
-    setUserCredentials,
-    userAction,
-    setUserAction,
-    successfullAuth,
-    setSuccessfullAuth,
-  } = useContext(UserContext);
+  const { user, setUserCredentials, userAction, setUserAction } =
+    useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -45,9 +38,8 @@ const LoginPageForm = () => {
     updatePassword(user, resetPassword)
       .then(() => {
         isResetWindowOpened(false);
-        console.log("lozinka promijenjena");
       })
-      .catch((error) => console.log(error.message));
+      .catch(() => showAlert("Ooops something went wrong! Please try again"));
   };
 
   const handleForgotPassword = () => {
@@ -62,22 +54,14 @@ const LoginPageForm = () => {
     }
     if (email && password) {
       setUserCredentials({ email, password });
-      console.log("jes");
-      console.log(user);
-      // setTimeout(() => {
-      //   if (successfullAuth) {
-      //     console.log(user);
-      //     console.log(userCredentials);
-      navigate("/my-orders");
-      //   }
-      // }, 100);
     }
   };
 
-  // useEffect(() => {
-  //   if (!successfullAuth) return;
-  //   navigate("/my-orders");
-  // }, [successfullAuth]);
+  useEffect(() => {
+    if (navigateToMyOrders) {
+      navigate("/my-orders");
+    } else return;
+  }, [navigateToMyOrders]);
 
   return (
     <div className="w-full 2xs:w-295 pt-20">

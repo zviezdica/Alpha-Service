@@ -1,17 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  setDoc,
-} from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 
 import { BrownButton, Logo, SubmittedOrder } from "../components";
 import { UserContext } from "../contexts/UserContext";
-import { auth, db } from "../firebase-config";
+import { AlertContext } from "../contexts/AlertContext";
+import { db } from "../firebase-config";
 
 import { alphaWhite, motorcycle2, motorcycle3 } from "../images";
 
@@ -19,6 +14,7 @@ const MyOrdersPage = ({ newOrderId }) => {
   const isMediumScreen = useMediaQuery({ query: "(min-width: 992px)" });
   const [orders, setOrders] = useState([]);
   const { user } = useContext(UserContext);
+  const { showAlert } = useContext(AlertContext);
   const navigate = useNavigate();
 
   const handleNewOrder = () => {
@@ -33,20 +29,17 @@ const MyOrdersPage = ({ newOrderId }) => {
       if (results) {
         results.forEach((result) => {
           ordersArr.push(result.data());
-          console.log(result.data());
         });
         setOrders(ordersArr);
       } else return;
-    } catch (error) {
-      console.log(error.message);
+    } catch {
+      showAlert("Ooops something went wrong! Try again later", "danger");
     }
-    console.log(orders);
   };
 
   useEffect(() => {
     if (user) {
       handleGetOrders();
-      console.log(user.uid);
     }
   }, [user]);
 
@@ -77,7 +70,7 @@ const MyOrdersPage = ({ newOrderId }) => {
               </p>
             </div>
           )}
-          {orders && (
+          {orders.length > 0 && (
             <div className="pt-30 ">
               <div className="flex justify-between items-center w-9/10 mr-15 px-24 py-6 text-10 text-secondary capitalize">
                 <p className="pr-10">order ID</p>
